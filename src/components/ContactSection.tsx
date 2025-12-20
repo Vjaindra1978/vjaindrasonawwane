@@ -24,10 +24,10 @@ export function ContactSection() {
   };
 
   return (
-    <section id="connect" className="py-24 bg-card/30">
+    <section id="connect" className="py-16 bg-card/30">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-12">
           <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
             Get in Touch
           </span>

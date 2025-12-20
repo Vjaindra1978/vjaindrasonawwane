@@ -27,9 +27,9 @@ const episodes = [
 
 export function PodcastSection() {
   return (
-    <section id="podcast" className="py-24 bg-background">
+    <section id="podcast" className="py-16 bg-background">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           {/* Left Content */}
           <div>
             <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
