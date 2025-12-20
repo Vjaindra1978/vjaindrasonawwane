@@ -1,5 +1,6 @@
 import { ArrowRight, Linkedin, Mail, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import profilePhoto from "@/assets/profile-photo.png";
 
 export function HeroSection() {
   return (
@@ -20,8 +21,23 @@ export function HeroSection() {
 
       <div className="container relative z-10 mx-auto px-6">
         <div className="max-w-5xl mx-auto text-center">
+          {/* Profile Photo */}
+          <div className="mb-8 animate-fade-up">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-gold-dark blur-lg opacity-50" />
+              <img
+                src={profilePhoto}
+                alt="Vjaindra Sonawwane - Strategic IT & Digital Transformation Leader"
+                className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-primary/30 shadow-elevated"
+              />
+              <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                <span className="text-sm">✓</span>
+              </div>
+            </div>
+          </div>
+
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm mb-8 animate-fade-up">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             <span className="text-sm text-muted-foreground font-medium">
               20+ Years of Enterprise Transformation Leadership
@@ -31,7 +47,7 @@ export function HeroSection() {
           {/* Main Headline */}
           <h1 
             className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-up"
-            style={{ animationDelay: '0.1s' }}
+            style={{ animationDelay: '0.2s' }}
           >
             Driving{' '}
             <span className="text-gradient-gold">Enterprise Digital</span>
@@ -41,8 +57,8 @@ export function HeroSection() {
 
           {/* Subheadline */}
           <p 
-            className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-up font-body"
-            style={{ animationDelay: '0.2s' }}
+            className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-up font-body"
+            style={{ animationDelay: '0.3s' }}
           >
             Strategic advisory leadership across IT strategy, enterprise architecture, 
             automation, cloud platforms, data analytics, and customer experience innovation 
@@ -51,8 +67,8 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-up"
-            style={{ animationDelay: '0.3s' }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-up"
+            style={{ animationDelay: '0.4s' }}
           >
             <Button variant="hero" size="xl" className="group">
               Discuss a Transformation Challenge
@@ -65,8 +81,8 @@ export function HeroSection() {
 
           {/* Quick Stats */}
           <div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto animate-fade-up"
-            style={{ animationDelay: '0.4s' }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto animate-fade-up"
+            style={{ animationDelay: '0.5s' }}
           >
             {[
               { value: "350+", label: "Sites Transformed" },
@@ -85,8 +101,8 @@ export function HeroSection() {
 
           {/* Social Links */}
           <div 
-            className="flex items-center justify-center gap-4 mt-12 animate-fade-up"
-            style={{ animationDelay: '0.5s' }}
+            className="flex items-center justify-center gap-4 mt-8 animate-fade-up"
+            style={{ animationDelay: '0.6s' }}
           >
             <a
               href="https://linkedin.com/in/vjaindra-sonawwane"

@@ -69,7 +69,7 @@ export function QuotesSection() {
   };
 
   return (
-    <section id="insights" className="py-24 bg-card/30">
+    <section id="insights" className="py-16 bg-card/30">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-12">

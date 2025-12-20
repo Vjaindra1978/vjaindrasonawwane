@@ -139,10 +139,10 @@ export function CapabilitiesSection() {
   const activeCapability = capabilities[activeIndex];
 
   return (
-    <section id="capabilities" className="py-24 bg-background">
+    <section id="capabilities" className="py-16 bg-background">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-12">
           <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
             Advisory Services
           </span>

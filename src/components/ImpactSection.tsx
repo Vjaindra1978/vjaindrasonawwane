@@ -41,10 +41,10 @@ const impactCards = [
 
 export function ImpactSection() {
   return (
-    <section id="impact" className="py-24 bg-card/30">
+    <section id="impact" className="py-16 bg-card/30">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-12">
           <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
             Strategic Impact
           </span>
@@ -102,7 +102,7 @@ export function ImpactSection() {
         </div>
 
         {/* Award Banner */}
-        <div className="mt-16 bg-gradient-card border border-border rounded-2xl p-8 md:p-12 text-center">
+        <div className="mt-12 bg-gradient-card border border-border rounded-2xl p-6 md:p-10 text-center">
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
               <span className="text-3xl">🏆</span>
