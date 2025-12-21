@@ -1,18 +1,19 @@
 import { ArrowRight, Linkedin, Mail, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import profilePhoto from "@/assets/profile-photo.png";
+import heroBg from "@/assets/hero-bg.jpeg";
+
 export function HeroSection() {
-  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card/50" />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gold/3 rounded-full blur-3xl" />
-      
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-      backgroundImage: `linear-gradient(hsl(var(--gold)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--gold)) 1px, transparent 1px)`,
-      backgroundSize: '60px 60px'
-    }} />
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Blurred Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center blur-sm scale-105"
+        style={{ backgroundImage: `url(${heroBg})` }}
+      />
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-background/85" />
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background" />
 
       <div className="container relative z-10 mx-auto px-6">
         <div className="max-w-5xl mx-auto text-center">
@@ -116,5 +117,6 @@ export function HeroSection() {
           <div className="w-1.5 h-3 rounded-full bg-primary animate-pulse" />
         </div>
       </div>
-    </section>;
+    </section>
+  );
 }

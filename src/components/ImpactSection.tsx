@@ -31,5 +31,52 @@ const impactCards = [{
   metrics: ["350+ sites", "Omnichannel CX", "Loyalty integration"]
 }];
 export function ImpactSection() {
-  return;
+  return (
+    <section id="impact" className="py-12 bg-card/30">
+      <div className="container mx-auto px-6">
+        {/* Section Header */}
+        <div className="max-w-3xl mx-auto text-center mb-12">
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+            Transformation Impact
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+            Driving Measurable <span className="text-gradient-gold">Results</span>
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            A track record of delivering enterprise-wide transformation with quantifiable business outcomes
+          </p>
+        </div>
+
+        {/* Impact Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {impactCards.map((card, index) => (
+            <div
+              key={index}
+              className="group bg-card border border-border rounded-xl p-6 hover-lift transition-all duration-300"
+            >
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <card.icon className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="font-display text-xl font-semibold text-foreground mb-2">
+                {card.title}
+              </h3>
+              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                {card.description}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {card.metrics.map((metric, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 text-xs rounded-full bg-secondary text-secondary-foreground"
+                  >
+                    {metric}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
