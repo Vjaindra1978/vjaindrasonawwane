@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp, Briefcase, MapPin } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, Briefcase, MapPin } from "lucide-react";
 
 interface CareerItem {
   period: string;
@@ -111,7 +112,13 @@ export function CareerTimelineSection() {
     <section id="career" className="py-12 bg-card/30">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto text-center mb-10"
+        >
           <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
             Professional Journey
           </span>
@@ -121,18 +128,24 @@ export function CareerTimelineSection() {
           <p className="text-muted-foreground text-lg">
             20+ years of progressive leadership across global enterprises
           </p>
-        </div>
+        </motion.div>
 
         {/* Compact Timeline */}
         <div className="max-w-3xl mx-auto space-y-2">
           {careerData.map((item, index) => (
-            <div
+            <motion.div
               key={index}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
               className="group"
             >
               {/* Compact Row - Clickable */}
-              <button
+              <motion.button
                 onClick={() => toggleExpand(index)}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
                 className="w-full flex items-center justify-between p-4 bg-card border border-border rounded-xl hover:border-primary/50 hover:bg-card/80 transition-all duration-300 text-left"
               >
                 <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -154,41 +167,63 @@ export function CareerTimelineSection() {
                 </div>
 
                 {/* Expand Icon */}
-                <div className="ml-4 text-muted-foreground group-hover:text-primary transition-colors">
-                  {expandedIndex === index ? (
-                    <ChevronUp className="w-5 h-5" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5" />
-                  )}
-                </div>
-              </button>
+                <motion.div 
+                  animate={{ rotate: expandedIndex === index ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="ml-4 text-muted-foreground group-hover:text-primary transition-colors"
+                >
+                  <ChevronDown className="w-5 h-5" />
+                </motion.div>
+              </motion.button>
 
               {/* Expanded Details */}
-              {expandedIndex === index && (
-                <div className="mt-2 ml-4 mr-4 p-4 bg-secondary/30 border border-border/50 rounded-lg animate-fade-in">
-                  <div className="flex items-center gap-2 text-muted-foreground text-sm mb-3">
-                    <MapPin className="w-4 h-4" />
-                    <span>{item.location}</span>
-                  </div>
-                  <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <Briefcase className="w-4 h-4 text-primary" />
-                    Strategic Roles & Responsibilities
-                  </h4>
-                  <ul className="space-y-2">
-                    {item.responsibilities.map((resp, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-2 text-muted-foreground text-sm"
-                        style={{ animationDelay: `${i * 100}ms` }}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                        <span>{resp}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+              <AnimatePresence>
+                {expandedIndex === index && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="overflow-hidden"
+                  >
+                    <motion.div 
+                      initial={{ y: -10 }}
+                      animate={{ y: 0 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                      className="mt-2 ml-4 mr-4 p-4 bg-secondary/30 border border-border/50 rounded-lg"
+                    >
+                      <div className="flex items-center gap-2 text-muted-foreground text-sm mb-3">
+                        <MapPin className="w-4 h-4" />
+                        <span>{item.location}</span>
+                      </div>
+                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                        <Briefcase className="w-4 h-4 text-primary" />
+                        Strategic Roles & Responsibilities
+                      </h4>
+                      <ul className="space-y-2">
+                        {item.responsibilities.map((resp, i) => (
+                          <motion.li
+                            key={i}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: 0.15 + i * 0.1 }}
+                            className="flex items-start gap-2 text-muted-foreground text-sm"
+                          >
+                            <motion.span 
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
+                              className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" 
+                            />
+                            <span>{resp}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
         </div>
       </div>
