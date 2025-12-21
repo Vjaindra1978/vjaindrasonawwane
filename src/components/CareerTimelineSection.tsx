@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Briefcase, MapPin } from "lucide-react";
+import { Briefcase, MapPin, ChevronRight } from "lucide-react";
 
 interface CareerItem {
   period: string;
@@ -102,14 +102,10 @@ const careerData: CareerItem[] = [
 ];
 
 export function CareerTimelineSection() {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-
-  const toggleExpand = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
-  };
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   return (
-    <section id="career" className="py-12 bg-card/30">
+    <section id="career" className="py-16 bg-card/30">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <motion.div 
@@ -117,7 +113,7 @@ export function CareerTimelineSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto text-center mb-10"
+          className="max-w-3xl mx-auto text-center mb-12"
         >
           <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
             Professional Journey
@@ -130,103 +126,177 @@ export function CareerTimelineSection() {
           </p>
         </motion.div>
 
-        {/* Compact Timeline */}
-        <div className="max-w-3xl mx-auto space-y-2">
-          {careerData.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="group"
-            >
-              {/* Compact Row - Clickable */}
-              <motion.button
-                onClick={() => toggleExpand(index)}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                className="w-full flex items-center justify-between p-4 bg-card border border-border rounded-xl hover:border-primary/50 hover:bg-card/80 transition-all duration-300 text-left"
+        {/* Horizontal Timeline */}
+        <div className="relative">
+          {/* Timeline Line */}
+          <div className="absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent hidden lg:block" />
+          
+          {/* Timeline Items - Horizontal Scroll */}
+          <div className="flex overflow-x-auto pb-6 gap-4 lg:gap-6 scrollbar-hide snap-x snap-mandatory">
+            {careerData.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+                className="flex-shrink-0 snap-start"
               >
-                <div className="flex items-center gap-4 flex-1 min-w-0">
-                  {/* Company & Role */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-display font-semibold text-foreground">
-                        {item.company}
+                {/* Timeline Node */}
+                <div className="flex flex-col items-center">
+                  {/* Dot */}
+                  <motion.button
+                    onClick={() => setSelectedIndex(selectedIndex === index ? null : index)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`relative z-10 w-4 h-4 rounded-full border-2 transition-all duration-300 mb-4 hidden lg:block ${
+                      selectedIndex === index 
+                        ? 'bg-primary border-primary shadow-lg shadow-primary/50' 
+                        : 'bg-card border-primary/50 hover:border-primary hover:bg-primary/20'
+                    }`}
+                  />
+                  
+                  {/* Card */}
+                  <motion.button
+                    onClick={() => setSelectedIndex(selectedIndex === index ? null : index)}
+                    whileHover={{ scale: 1.02, y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`w-56 sm:w-64 p-4 rounded-xl border text-left transition-all duration-300 ${
+                      selectedIndex === index 
+                        ? 'bg-primary/10 border-primary shadow-lg shadow-primary/20' 
+                        : 'bg-card border-border hover:border-primary/50 hover:bg-card/80'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs text-muted-foreground font-medium">
+                        {item.period}
                       </span>
-                      <span className="text-muted-foreground hidden sm:inline">•</span>
-                      <span className="text-primary text-sm font-medium">
-                        {item.role}
-                      </span>
+                      <ChevronRight className={`w-4 h-4 text-primary transition-transform duration-300 ${
+                        selectedIndex === index ? 'rotate-90' : ''
+                      }`} />
                     </div>
-                    <div className="text-muted-foreground text-sm mt-0.5">
-                      {item.period}
-                    </div>
+                    <h3 className="font-display font-bold text-foreground text-sm mb-1 line-clamp-1">
+                      {item.company}
+                    </h3>
+                    <p className="text-primary text-xs font-medium line-clamp-1">
+                      {item.role}
+                    </p>
+                  </motion.button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Expanded Responsibilities Panel */}
+        <AnimatePresence mode="wait">
+          {selectedIndex !== null && (
+            <motion.div
+              key={selectedIndex}
+              initial={{ opacity: 0, y: 20, height: 0 }}
+              animate={{ opacity: 1, y: 0, height: "auto" }}
+              exit={{ opacity: 0, y: -20, height: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="mt-8 overflow-hidden"
+            >
+              <motion.div 
+                initial={{ scale: 0.95 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.95 }}
+                className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-card via-card to-primary/5 border border-primary/30 rounded-2xl shadow-xl"
+              >
+                {/* Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                  <div>
+                    <motion.h3 
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 }}
+                      className="font-display text-xl sm:text-2xl font-bold text-foreground"
+                    >
+                      {careerData[selectedIndex].company}
+                    </motion.h3>
+                    <motion.p 
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.15 }}
+                      className="text-primary font-medium"
+                    >
+                      {careerData[selectedIndex].role}
+                    </motion.p>
                   </div>
+                  <motion.div 
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="flex items-center gap-4 text-muted-foreground text-sm"
+                  >
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4" />
+                      {careerData[selectedIndex].location}
+                    </span>
+                    <span className="hidden sm:inline">•</span>
+                    <span>{careerData[selectedIndex].period}</span>
+                  </motion.div>
                 </div>
 
-                {/* Expand Icon */}
-                <motion.div 
-                  animate={{ rotate: expandedIndex === index ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="ml-4 text-muted-foreground group-hover:text-primary transition-colors"
-                >
-                  <ChevronDown className="w-5 h-5" />
-                </motion.div>
-              </motion.button>
-
-              {/* Expanded Details */}
-              <AnimatePresence>
-                {expandedIndex === index && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden"
+                {/* Responsibilities with Sprinkle Animation */}
+                <div>
+                  <motion.h4 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.25 }}
+                    className="font-semibold text-foreground mb-4 flex items-center gap-2"
                   >
-                    <motion.div 
-                      initial={{ y: -10 }}
-                      animate={{ y: 0 }}
-                      transition={{ duration: 0.3, delay: 0.1 }}
-                      className="mt-2 ml-4 mr-4 p-4 bg-secondary/30 border border-border/50 rounded-lg"
-                    >
-                      <div className="flex items-center gap-2 text-muted-foreground text-sm mb-3">
-                        <MapPin className="w-4 h-4" />
-                        <span>{item.location}</span>
-                      </div>
-                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                        <Briefcase className="w-4 h-4 text-primary" />
-                        Strategic Roles & Responsibilities
-                      </h4>
-                      <ul className="space-y-2">
-                        {item.responsibilities.map((resp, i) => (
-                          <motion.li
-                            key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: 0.15 + i * 0.1 }}
-                            className="flex items-start gap-2 text-muted-foreground text-sm"
-                          >
-                            <motion.span 
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              transition={{ duration: 0.2, delay: 0.2 + i * 0.1 }}
-                              className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" 
-                            />
-                            <span>{resp}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    <Briefcase className="w-5 h-5 text-primary" />
+                    Strategic Roles & Responsibilities
+                  </motion.h4>
+                  <div className="grid gap-3">
+                    {careerData[selectedIndex].responsibilities.map((resp, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: -30, scale: 0.8 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        transition={{ 
+                          duration: 0.4, 
+                          delay: 0.3 + i * 0.15,
+                          type: "spring",
+                          stiffness: 100
+                        }}
+                        className="flex items-start gap-3 p-3 bg-background/50 rounded-lg border border-border/50"
+                      >
+                        <motion.div 
+                          initial={{ scale: 0, rotate: -180 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ 
+                            duration: 0.5, 
+                            delay: 0.4 + i * 0.15,
+                            type: "spring",
+                            stiffness: 200
+                          }}
+                          className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-gold mt-2 flex-shrink-0" 
+                        />
+                        <span className="text-muted-foreground">{resp}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
-          ))}
-        </div>
+          )}
+        </AnimatePresence>
       </div>
+
+      {/* Custom scrollbar hide styles */}
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 }

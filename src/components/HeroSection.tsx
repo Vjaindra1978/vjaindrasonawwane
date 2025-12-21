@@ -5,25 +5,30 @@ import heroBg from "@/assets/hero-bg.jpeg";
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Blurred Background Image */}
+      {/* Full Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center blur-sm scale-105"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-background/85" />
+      {/* Dark Overlay for readability */}
+      <div className="absolute inset-0 bg-background/70" />
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background" />
 
       <div className="container relative z-10 mx-auto px-6">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Profile Photo */}
+          {/* Profile Photo - More Visible */}
           <div className="mb-8 animate-fade-up">
             <div className="relative inline-block">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-gold-dark blur-lg opacity-50" />
-              <img alt="Vjaindra Sonawwane - Strategic IT & Digital Transformation Leader" className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-primary/30 shadow-elevated" src="/lovable-uploads/538e29bd-39b6-4a3c-a7ff-27aa2a81f6fb.jpg" />
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-sm">✓</span>
+              <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-primary via-gold to-gold-dark blur-xl opacity-70" />
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-primary to-gold opacity-50" />
+              <img 
+                alt="Vjaindra Sonawwane - Strategic IT & Digital Transformation Leader" 
+                className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 rounded-full object-cover border-4 border-primary/50 shadow-2xl ring-4 ring-gold/30" 
+                src="/lovable-uploads/538e29bd-39b6-4a3c-a7ff-27aa2a81f6fb.jpg" 
+              />
+              <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-gradient-to-br from-primary to-gold flex items-center justify-center shadow-lg">
+                <span className="text-sm font-bold text-primary-foreground">✓</span>
               </div>
             </div>
           </div>
