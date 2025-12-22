@@ -1,7 +1,17 @@
-import { Play, Headphones, Clock, Calendar } from "lucide-react";
+import { useState } from "react";
+import { Play, Headphones, Clock, Calendar, Youtube, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const episodes = [
+interface Episode {
+  number: string;
+  title: string;
+  description: string;
+  duration: string;
+  date: string;
+  youtubeId?: string;
+}
+
+const episodes: Episode[] = [
   {
     number: "EP 01",
     title: "The Art of Enterprise Digital Transformation",
@@ -26,10 +36,21 @@ const episodes = [
 ];
 
 export function PodcastSection() {
+  const [activeEpisode, setActiveEpisode] = useState<number | null>(null);
+
+  const handlePlayEpisode = (index: number, youtubeId?: string) => {
+    if (youtubeId) {
+      setActiveEpisode(activeEpisode === index ? null : index);
+    } else {
+      // For coming soon episodes, open YouTube channel
+      window.open("https://youtube.com/@vjaindra", "_blank");
+    }
+  };
+
   return (
     <section id="podcast" className="py-16 bg-background">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-start">
           {/* Left Content */}
           <div>
             <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
@@ -62,14 +83,36 @@ export function PodcastSection() {
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <Button variant="hero" size="lg">
-                <Play className="w-5 h-5 mr-2" />
-                Subscribe on Spotify
+              <Button variant="hero" size="lg" asChild>
+                <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer">
+                  <Play className="w-5 h-5 mr-2" />
+                  Subscribe on Spotify
+                </a>
               </Button>
-              <Button variant="outline" size="lg">
-                Subscribe on YouTube
+              <Button variant="outline" size="lg" asChild>
+                <a href="https://youtube.com/@vjaindra" target="_blank" rel="noopener noreferrer">
+                  <Youtube className="w-5 h-5 mr-2" />
+                  Subscribe on YouTube
+                </a>
               </Button>
             </div>
+
+            {/* Video Player Area - Shows when episode is active */}
+            {activeEpisode !== null && episodes[activeEpisode]?.youtubeId && (
+              <div className="mt-8 rounded-xl overflow-hidden border border-border">
+                <div className="aspect-video">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={`https://www.youtube.com/embed/${episodes[activeEpisode].youtubeId}?autoplay=1`}
+                    title={episodes[activeEpisode].title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Right Episodes */}
@@ -77,12 +120,29 @@ export function PodcastSection() {
             {episodes.map((episode, index) => (
               <div
                 key={index}
-                className="group bg-card border border-border rounded-xl p-6 hover-lift cursor-pointer"
+                className={`group bg-card border rounded-xl p-6 transition-all duration-300 cursor-pointer ${
+                  activeEpisode === index 
+                    ? 'border-primary shadow-lg shadow-primary/10' 
+                    : 'border-border hover-lift'
+                }`}
+                onClick={() => handlePlayEpisode(index, episode.youtubeId)}
               >
                 <div className="flex items-start gap-4">
                   {/* Play Button */}
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-colors">
-                    <Play className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
+                    activeEpisode === index 
+                      ? 'bg-primary' 
+                      : 'bg-primary/10 group-hover:bg-primary'
+                  }`}>
+                    {episode.youtubeId ? (
+                      <Play className={`w-6 h-6 transition-colors ${
+                        activeEpisode === index 
+                          ? 'text-primary-foreground' 
+                          : 'text-primary group-hover:text-primary-foreground'
+                      }`} />
+                    ) : (
+                      <Youtube className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                    )}
                   </div>
 
                   {/* Content */}
@@ -100,10 +160,24 @@ export function PodcastSection() {
                     <p className="text-muted-foreground text-sm">
                       {episode.description}
                     </p>
+                    
+                    {episode.youtubeId && (
+                      <div className="mt-3 flex items-center gap-2 text-primary text-sm">
+                        <ExternalLink className="w-4 h-4" />
+                        <span>Watch on YouTube</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             ))}
+
+            {/* Add Episode Note */}
+            <div className="p-4 bg-secondary/30 rounded-lg border border-border/50 text-center">
+              <p className="text-muted-foreground text-sm">
+                New episodes added regularly. Subscribe to get notified when new content is available.
+              </p>
+            </div>
           </div>
         </div>
       </div>

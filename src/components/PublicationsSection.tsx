@@ -1,5 +1,8 @@
-import { BookOpen, FileText, Newspaper, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { BookOpen, FileText, Newspaper, ArrowRight, Bell, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 const publications = [
   {
@@ -49,6 +52,37 @@ const shortNotes = [
 ];
 
 export function PublicationsSection() {
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [subscribedTopics, setSubscribedTopics] = useState<string[]>([]);
+
+  const handleNotify = (title: string) => {
+    if (subscribedTopics.includes(title)) {
+      toast({
+        title: "Already Subscribed",
+        description: "You're already subscribed to updates for this publication.",
+      });
+      return;
+    }
+
+    setSubscribedTopics([...subscribedTopics, title]);
+    toast({
+      title: "Notification Set",
+      description: `You'll be notified when "${title}" is available.`,
+    });
+  };
+
+  const handleNewsletterSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    toast({
+      title: "Subscribed!",
+      description: "You'll receive updates on new publications and insights.",
+    });
+    setEmail("");
+  };
+
   return (
     <section id="publications" className="py-16 bg-card/30">
       <div className="container mx-auto px-6">
@@ -67,46 +101,87 @@ export function PublicationsSection() {
           </p>
         </div>
 
+        {/* Newsletter Subscribe */}
+        <div className="max-w-xl mx-auto mb-12">
+          <form onSubmit={handleNewsletterSubscribe} className="flex gap-3">
+            <div className="relative flex-1">
+              <Bell className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Input
+                type="email"
+                placeholder="Enter your email to get notified"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="pl-10"
+                required
+              />
+            </div>
+            <Button type="submit" variant="hero">
+              Get Notified
+            </Button>
+          </form>
+        </div>
+
         {/* Featured Publications */}
         <div className="grid md:grid-cols-3 gap-6 mb-12">
-          {publications.map((pub, index) => (
-            <div
-              key={index}
-              className="group bg-card border border-border rounded-2xl p-6 hover-lift"
-            >
-              {/* Icon & Status */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <pub.icon className="w-6 h-6 text-primary" />
+          {publications.map((pub, index) => {
+            const isSubscribed = subscribedTopics.includes(pub.title);
+            return (
+              <div
+                key={index}
+                className="group bg-card border border-border rounded-2xl p-6 hover-lift"
+              >
+                {/* Icon & Status */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <pub.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <span
+                    className={`px-3 py-1 text-xs font-medium rounded-full ${
+                      pub.status === "Published"
+                        ? "bg-primary/20 text-primary"
+                        : pub.status === "In Progress"
+                        ? "bg-accent/20 text-accent"
+                        : "bg-secondary text-secondary-foreground"
+                    }`}
+                  >
+                    {pub.status}
+                  </span>
                 </div>
-                <span
-                  className={`px-3 py-1 text-xs font-medium rounded-full ${
-                    pub.status === "Published"
-                      ? "bg-primary/20 text-primary"
-                      : pub.status === "In Progress"
-                      ? "bg-accent/20 text-accent"
-                      : "bg-secondary text-secondary-foreground"
-                  }`}
+
+                {/* Content */}
+                <h3 className="font-display text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
+                  {pub.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                  {pub.description}
+                </p>
+
+                {/* Action */}
+                <Button 
+                  variant={isSubscribed ? "outline" : "ghost"} 
+                  className={`p-0 h-auto ${isSubscribed ? 'text-primary' : 'text-primary hover:text-primary/80'}`}
+                  onClick={() => pub.status !== "Published" && handleNotify(pub.title)}
                 >
-                  {pub.status}
-                </span>
+                  {pub.status === "Published" ? (
+                    <>
+                      Read Now
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </>
+                  ) : isSubscribed ? (
+                    <>
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      Subscribed
+                    </>
+                  ) : (
+                    <>
+                      <Bell className="w-4 h-4 mr-2" />
+                      Get Notified
+                    </>
+                  )}
+                </Button>
               </div>
-
-              {/* Content */}
-              <h3 className="font-display text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
-                {pub.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                {pub.description}
-              </p>
-
-              {/* Action */}
-              <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary/80">
-                {pub.status === "Published" ? "Read Now" : "Get Notified"}
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Short Notes */}
