@@ -70,7 +70,7 @@ export function PodcastSection() {
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Clock className="w-5 h-5 text-primary" />
-                //<span>30-45 Minutes</span>
+                ##<span>30-45 Minutes</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Calendar className="w-5 h-5 text-primary" />
