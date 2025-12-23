@@ -15,10 +15,10 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Full Background Image - Natural Coverage */}
       <div
-        className="absolute inset-0 w-full h-full bg-no-repeat bg-center"
+        className="absolute inset-0 w-full h-full"
         style={{
           backgroundImage: `url(${heroBg})`,
-          backgroundSize: window.innerWidth < 768 ? "cover" : "contain",",
+          backgroundSize: "cover",
           backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
         }}
