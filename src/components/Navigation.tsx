@@ -49,7 +49,10 @@ export function Navigation() {
               <span className="text-primary-foreground font-display font-bold text-xl">V</span>
             </div>
             <span className="font-display text-xl font-semibold text-foreground hidden sm:block">
-              <span>Vjaindra Sonawwane</span>
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                Vjaindra Sonawwane
+              </span>
               <br />
               <span className="text-sm text-muted-foreground font-medium">
                 20+ Years of Enterprise Transformation Leadership
