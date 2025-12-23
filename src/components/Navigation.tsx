@@ -51,6 +51,7 @@ export function Navigation() {
             <span className="font-display text-xl font-semibold text-foreground hidden sm:block">
               <span>Vjaindra Sonawwane</span>
               <br />
+              <span className="text-sm text-muted-foreground font-medium">
               <span>20+ Years of Enterprise Transformation Leadership</span>
             </span>
           </a>
