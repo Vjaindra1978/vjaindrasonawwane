@@ -13,13 +13,13 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Full Background Image - Complete Coverage from edge to edge */}
+      {/* Full Background Image - Natural Coverage */}
       <div 
         className="absolute inset-0 w-full h-full"
         style={{ 
           backgroundImage: `url(${heroBg})`,
-          backgroundSize: '100% 100%',
-          backgroundPosition: 'left top',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
           backgroundRepeat: 'no-repeat',
         }}
       />
