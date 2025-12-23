@@ -38,7 +38,7 @@ export function HeroSection() {
             </span>
           </div>
 
-          {/* Profile Photo + Name Container// */}
+          {/* Profile Photo + Name Container */}
           <div
             className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8 animate-fade-up"
             style={{ animationDelay: "0.1s" }}
