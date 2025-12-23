@@ -1,4 +1,4 @@
-import { Award, Mic, GraduationCap, Trophy, BadgeCheck } from "lucide-react";
+import { Mic, GraduationCap, Trophy } from "lucide-react";
 
 const recognitions = [
   {
@@ -31,23 +31,6 @@ const recognitions = [
   },
 ];
 
-const certifications = [
-  "Six Sigma Greenbelt",
-  "Six Sigma Black Belt",
-  "Six Sigma Master Black Belt",
-  "Agile Scrum Master",
-  "Certified Prince2 Professional (Foundation & Practitioner)",
-  "ITIL V3",
-  "Business Analyst - RPA",
-  "PMP Training Certification, 35 PDU",
-  "Business Process Management Training",
-  "Certified ISO 27001",
-  "Certified ISO 27701",
-  "7 Habits of Outstanding Customer Service",
-  "Design Thinking",
-  "ITP Membership – New Zealand",
-];
-
 const iconColors = {
   award: "bg-primary/20 text-primary",
   speaker: "bg-blue-500/20 text-blue-400",
@@ -73,7 +56,7 @@ export function RecognitionsSection() {
         </div>
 
         {/* Recognitions Grid */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {recognitions.map((item, index) => (
             <div
               key={index}
@@ -105,32 +88,6 @@ export function RecognitionsSection() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Certifications Section */}
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-card border border-border rounded-2xl p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <BadgeCheck className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-display text-2xl font-semibold text-foreground">
-                Certifications
-              </h3>
-            </div>
-            
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {certifications.map((cert, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
-                >
-                  <span className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
-                  <span className="text-foreground text-sm font-medium">{cert}</span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Additional Context */}
