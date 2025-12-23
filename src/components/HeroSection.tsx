@@ -33,9 +33,7 @@ export function HeroSection() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm mb-6 animate-fade-up">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-            <span className="text-sm text-muted-foreground font-medium">
-              {/*20+ Years of Enterprise Transformation Leadership/*}
-            </span>
+            <span className="text-sm text-muted-foreground font-medium"></span>
           </div>
 
           {/* Profile Photo + Name Container */}
