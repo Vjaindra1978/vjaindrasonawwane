@@ -13,13 +13,13 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Full Background Image - Complete Coverage */}
+      {/* Full Background Image - Complete Coverage from edge to edge */}
       <div 
         className="absolute inset-0 w-full h-full"
         style={{ 
           backgroundImage: `url(${heroBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center center',
+          backgroundSize: '100% 100%',
+          backgroundPosition: 'left top',
           backgroundRepeat: 'no-repeat',
         }}
       />
@@ -29,34 +29,41 @@ export function HeroSection() {
 
       <div className="container relative z-10 mx-auto px-6">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Profile Photo - Rounded Rectangle for Full Display */}
-          <div className="mb-8 animate-fade-up">
-            <div className="relative inline-block">
-              <div className="absolute -inset-3 rounded-2xl bg-gradient-to-br from-primary via-gold to-gold-dark blur-xl opacity-60" />
-              <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-primary to-gold opacity-40" />
-              <img 
-                alt="Vjaindra Sonawwane - Strategic IT & Digital Transformation Leader" 
-                className="relative w-40 h-52 sm:w-48 sm:h-64 md:w-56 md:h-72 rounded-2xl object-cover object-top border-4 border-primary/50 shadow-2xl ring-4 ring-gold/30" 
-                src={profilePhoto}
-              />
-              <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-gradient-to-br from-primary to-gold flex items-center justify-center shadow-lg">
-                <span className="text-sm font-bold text-primary-foreground">✓</span>
-              </div>
-            </div>
-          </div>
-
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm mb-6 animate-fade-up" style={{
-            animationDelay: '0.1s'
-          }}>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm mb-6 animate-fade-up">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             <span className="text-sm text-muted-foreground font-medium">
               20+ Years of Enterprise Transformation Leadership
             </span>
           </div>
 
+          {/* Profile Photo + Name Container */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+            {/* Round Profile Photo */}
+            <div className="relative">
+              <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-primary via-gold to-gold-dark blur-lg opacity-60" />
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-primary to-gold opacity-40" />
+              <img 
+                alt="Vjaindra Sonawwane - Strategic IT & Digital Transformation Leader" 
+                className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full object-cover object-top border-4 border-primary/50 shadow-2xl ring-4 ring-gold/30" 
+                src={profilePhoto}
+              />
+              <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-gold flex items-center justify-center shadow-lg">
+                <span className="text-xs font-bold text-primary-foreground">✓</span>
+              </div>
+            </div>
+            
+            {/* Name beside photo */}
+            <div className="text-center sm:text-left">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1">
+                Vjaindra Sonawane
+              </h2>
+              <p className="text-primary font-medium text-sm sm:text-base">Strategic IT & Digital Transformation Leader</p>
+            </div>
+          </div>
+
           {/* Main Headline */}
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-up" style={{
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-up" style={{
             animationDelay: '0.2s'
           }}>
             Driving{' '}
