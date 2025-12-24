@@ -50,7 +50,7 @@ export function HeroSection() {
                 className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full object-cover object-top border-4 border-primary/50 shadow-2xl ring-4 ring-gold/30"
                 src={profilePhoto}
               />
-              <div className="absolute -bottom-1 -right-2 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-gold flex items-center justify-center shadow-lg">
+              <div className="absolute -bottom-1 -right-6 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-gold flex items-center justify-center shadow-lg">
                 <span className="text-xs font-bold text-primary-foreground">✓</span>
               </div>
             </div>
