@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { ConsultationScheduler } from "./ConsultationScheduler";
 import emailjs from "@emailjs/browser";
 
 const EMAILJS_SERVICE_ID = "service_n1s3igu";
@@ -13,6 +14,7 @@ const EMAILJS_PUBLIC_KEY = "OLEkUD0cAHdwJIaGr";
 export function ContactSection() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSchedulerOpen, setIsSchedulerOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,14 +26,25 @@ export function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const currentDateTime = new Date().toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZoneName: "short",
+    });
+
     try {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
+          name: formData.name,
           from_email: formData.email,
           subject: formData.subject,
+          time: currentDateTime,
           message: formData.message,
           to_name: "Vjaindra Sonawwane",
         },
@@ -141,10 +154,19 @@ export function ContactSection() {
               <p className="text-muted-foreground text-sm mb-4">
                 Book a 30-minute discovery call to discuss your transformation challenges.
               </p>
-              <Button variant="hero" className="w-full">
+              <Button 
+                variant="hero" 
+                className="w-full"
+                onClick={() => setIsSchedulerOpen(true)}
+              >
                 Book Meeting
               </Button>
             </div>
+
+            <ConsultationScheduler 
+              isOpen={isSchedulerOpen} 
+              onClose={() => setIsSchedulerOpen(false)} 
+            />
           </div>
 
           {/* Contact Form */}

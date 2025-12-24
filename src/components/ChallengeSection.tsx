@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { ConsultationScheduler } from "./ConsultationScheduler";
 import emailjs from "@emailjs/browser";
 
 const EMAILJS_SERVICE_ID = "service_n1s3igu";
@@ -35,6 +36,7 @@ const organizationTypes = [
 export function ChallengeSection() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSchedulerOpen, setIsSchedulerOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -48,17 +50,26 @@ export function ChallengeSection() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const currentDateTime = new Date().toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZoneName: "short",
+    });
+
     try {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
+          name: formData.name,
           from_email: formData.email,
-          organization: formData.organization,
-          organization_type: formData.organizationType,
-          functional_area: formData.functionalArea,
-          challenge: formData.challenge,
+          subject: "Transformation Challenge",
+          time: currentDateTime,
+          message: `Organization: ${formData.organization}\nOrganization Type: ${formData.organizationType}\nFunctional Area: ${formData.functionalArea}\n\nChallenge:\n${formData.challenge}`,
           to_name: "Vjaindra Sonawwane",
         },
         EMAILJS_PUBLIC_KEY
@@ -176,16 +187,19 @@ export function ChallengeSection() {
               <p className="text-muted-foreground text-sm mb-4">
                 Book a 30-minute discovery call to discuss your transformation challenges.
               </p>
-              <a
-                href="https://calendly.com/vjaindra-sonawwane"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Button 
+                variant="hero" 
+                className="w-full"
+                onClick={() => setIsSchedulerOpen(true)}
               >
-                <Button variant="hero" className="w-full">
-                  Book Meeting
-                </Button>
-              </a>
+                Book Meeting
+              </Button>
             </div>
+
+            <ConsultationScheduler 
+              isOpen={isSchedulerOpen} 
+              onClose={() => setIsSchedulerOpen(false)} 
+            />
 
             {/* Trust Indicator */}
             <div className="p-5 bg-card border border-border rounded-xl">
