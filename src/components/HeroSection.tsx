@@ -35,7 +35,7 @@ export function HeroSection() {
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
             <span className="text-sm text-muted-foreground font-medium"></span>
           </div>
-
+          tetetetetetetete
           {/* Profile Photo + Name Container */}
           <div
             className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8 animate-fade-up"
@@ -65,7 +65,6 @@ export function HeroSection() {
               </p>
             </div>
           </div>
-
           {/* Main Headline */}
           <h1
             className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-up"
@@ -77,7 +76,6 @@ export function HeroSection() {
             <br />
             Transformation & Growth
           </h1>
-
           {/* Subheadline */}
           <p
             className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-up font-body"
@@ -88,7 +86,6 @@ export function HeroSection() {
             Strategic advisory leadership across IT strategy, enterprise architecture, automation, cloud platforms, data
             analytics, and customer experience innovation for global enterprises.
           </p>
-
           {/* CTA Buttons */}
           <div
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-up"
@@ -104,7 +101,6 @@ export function HeroSection() {
               Explore Strategic Capabilities
             </Button>
           </div>
-
           {/* Quick Stats */}
           <div
             className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto animate-fade-up"
@@ -139,7 +135,6 @@ export function HeroSection() {
               </div>
             ))}
           </div>
-
           {/* Social Links */}
           <div
             className="flex items-center justify-center gap-4 mt-8 animate-fade-up"
