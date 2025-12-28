@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format, addDays, isSameDay, isWeekend } from "date-fns";
 import { motion } from "framer-motion";
 import { Calendar, Clock, User, Mail, MessageSquare, CheckCircle, ChevronLeft, ChevronRight, Loader2, Sparkles } from "lucide-react";
@@ -12,6 +12,9 @@ import emailjs from "@emailjs/browser";
 const EMAILJS_SERVICE_ID = "service_n1s3igu";
 const EMAILJS_TEMPLATE_ID = "template_alsnpb5";
 const EMAILJS_PUBLIC_KEY = "OLEkUD0cAHdwJIaGr";
+
+// Confirmation email template ID - you may need to create this in EmailJS
+const EMAILJS_CONFIRMATION_TEMPLATE_ID = "template_confirmation";
 
 const timeSlots = [
   "09:00 AM",
@@ -28,6 +31,40 @@ const timeSlots = [
   "04:30 PM",
 ];
 
+interface Booking {
+  date: string;
+  time: string;
+  name: string;
+  email: string;
+}
+
+const BOOKINGS_STORAGE_KEY = "consultation_bookings";
+
+const getBookings = (): Booking[] => {
+  try {
+    const stored = localStorage.getItem(BOOKINGS_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveBooking = (booking: Booking) => {
+  const bookings = getBookings();
+  bookings.push(booking);
+  localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(bookings));
+};
+
+const isSlotBooked = (date: Date, time: string): boolean => {
+  const bookings = getBookings();
+  const dateStr = format(date, "yyyy-MM-dd");
+  return bookings.some((b) => b.date === dateStr && b.time === time);
+};
+
+const getAvailableSlotsForDate = (date: Date): string[] => {
+  return timeSlots.filter((time) => !isSlotBooked(date, time));
+};
+
 interface ConsultationSchedulerProps {
   isOpen: boolean;
   onClose: () => void;
@@ -40,6 +77,7 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
   const [weekOffset, setWeekOffset] = useState(0);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string>("");
+  const [availableSlots, setAvailableSlots] = useState<string[]>(timeSlots);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -47,6 +85,18 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  // Update available slots when date changes
+  useEffect(() => {
+    if (selectedDate) {
+      const slots = getAvailableSlotsForDate(selectedDate);
+      setAvailableSlots(slots);
+      // Reset selected time if it's no longer available
+      if (selectedTime && !slots.includes(selectedTime)) {
+        setSelectedTime("");
+      }
+    }
+  }, [selectedDate, selectedTime]);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -108,6 +158,25 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
     return days.slice(0, 5);
   };
 
+  const sendConfirmationEmail = async (formattedDateTime: string) => {
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_CONFIRMATION_TEMPLATE_ID,
+        {
+          to_email: formData.email,
+          to_name: formData.name,
+          scheduled_time: formattedDateTime,
+          topic: formData.topic,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+    } catch (error) {
+      console.log("Confirmation email not sent (template may not exist):", error);
+      // Don't throw - this is optional functionality
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedDate || !selectedTime) return;
@@ -118,6 +187,7 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
     const formattedDateTime = `${format(selectedDate, "EEEE, MMMM d, yyyy")} at ${selectedTime} (NZST)`;
 
     try {
+      // Send notification to admin
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -131,6 +201,17 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
         },
         EMAILJS_PUBLIC_KEY
       );
+
+      // Save booking to localStorage
+      saveBooking({
+        date: format(selectedDate, "yyyy-MM-dd"),
+        time: selectedTime,
+        name: formData.name,
+        email: formData.email,
+      });
+
+      // Send confirmation email to user (optional - won't fail if template doesn't exist)
+      await sendConfirmationEmail(formattedDateTime);
 
       setStep(3);
       toast({
@@ -157,6 +238,7 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
     setErrors({});
     setTouched({});
     setWeekOffset(0);
+    setAvailableSlots(timeSlots);
     onClose();
   };
 
@@ -282,22 +364,34 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
                     <Clock className="w-4 h-4 text-primary" />
                     Select a Time (NZST)
                   </h4>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                    {timeSlots.map((time) => (
-                      <button
-                        key={time}
-                        onClick={() => setSelectedTime(time)}
-                        className={cn(
-                          "py-2 px-3 rounded-lg border text-sm font-medium transition-all",
-                          selectedTime === time
-                            ? "border-primary bg-primary/10 text-primary"
-                            : "border-border hover:border-primary/50 hover:bg-muted text-foreground"
-                        )}
-                      >
-                        {time}
-                      </button>
-                    ))}
-                  </div>
+                  {availableSlots.length === 0 ? (
+                    <p className="text-muted-foreground text-sm py-4 text-center">
+                      No available slots for this date. Please select another day.
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                      {timeSlots.map((time) => {
+                        const isBooked = !availableSlots.includes(time);
+                        return (
+                          <button
+                            key={time}
+                            onClick={() => !isBooked && setSelectedTime(time)}
+                            disabled={isBooked}
+                            className={cn(
+                              "py-2 px-3 rounded-lg border text-sm font-medium transition-all",
+                              isBooked
+                                ? "border-border bg-muted/50 text-muted-foreground cursor-not-allowed line-through opacity-50"
+                                : selectedTime === time
+                                  ? "border-primary bg-primary/10 text-primary"
+                                  : "border-border hover:border-primary/50 hover:bg-muted text-foreground"
+                            )}
+                          >
+                            {time}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
 
