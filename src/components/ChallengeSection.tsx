@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Send, Building2, Layers, AlertCircle, Mail, Linkedin, Calendar, MapPin, Phone, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, Building2, Layers, AlertCircle, Mail, Linkedin, Calendar, MapPin, Phone, Loader2, CheckCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,6 +37,7 @@ const organizationTypes = [
 export function ChallengeSection() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isSchedulerOpen, setIsSchedulerOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -75,6 +77,7 @@ export function ChallengeSection() {
         EMAILJS_PUBLIC_KEY
       );
 
+      setIsSuccess(true);
       toast({
         title: "Challenge Received!",
         description: "Thank you for sharing your transformation challenge. I will respond with insights shortly.",
@@ -88,6 +91,7 @@ export function ChallengeSection() {
         functionalArea: "",
         challenge: "",
       });
+      setTimeout(() => setIsSuccess(false), 4000);
     } catch (error) {
       console.error("EmailJS Error:", error);
       toast({
@@ -216,119 +220,185 @@ export function ChallengeSection() {
 
           {/* Right Form */}
           <div className="lg:col-span-3">
-            <div className="bg-card border border-border rounded-2xl p-8">
-              <h3 className="font-display text-xl font-semibold text-foreground mb-6">
-                Share Your Transformation Challenge
-              </h3>
-              
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Name & Email */}
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Your Name
-                    </label>
-                    <Input
-                      placeholder="John Smith"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Email Address
-                    </label>
-                    <Input
-                      type="email"
-                      placeholder="john@company.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required
-                    />
-                  </div>
-                </div>
-
-                {/* Organization */}
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    <Building2 className="w-4 h-4 inline mr-2" />
-                    Organization Name
-                  </label>
-                  <Input
-                    placeholder="Your Company"
-                    value={formData.organization}
-                    onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                    required
-                  />
-                </div>
-
-                {/* Organization Type */}
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Organization Type
-                  </label>
-                  <select
-                    className="w-full h-10 px-3 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
-                    value={formData.organizationType}
-                    onChange={(e) => setFormData({ ...formData, organizationType: e.target.value })}
-                    required
+            <div className="bg-card border border-border rounded-2xl p-8 relative overflow-hidden">
+              <AnimatePresence mode="wait">
+                {isSuccess ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    className="flex flex-col items-center justify-center py-12 text-center"
                   >
-                    <option value="">Select type...</option>
-                    {organizationTypes.map((type) => (
-                      <option key={type} value={type}>{type}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Functional Area */}
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    <Layers className="w-4 h-4 inline mr-2" />
-                    Functional Area
-                  </label>
-                  <select
-                    className="w-full h-10 px-3 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
-                    value={formData.functionalArea}
-                    onChange={(e) => setFormData({ ...formData, functionalArea: e.target.value })}
-                    required
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
+                      className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mb-6 relative"
+                    >
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <CheckCircle className="w-10 h-10 text-green-500" />
+                      </motion.div>
+                      {[...Array(6)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                          animate={{ 
+                            opacity: [0, 1, 0], 
+                            scale: [0, 1, 0.5],
+                            x: Math.cos(i * 60 * Math.PI / 180) * 60,
+                            y: Math.sin(i * 60 * Math.PI / 180) * 60
+                          }}
+                          transition={{ delay: 0.4 + i * 0.1, duration: 0.8 }}
+                          className="absolute"
+                        >
+                          <Sparkles className="w-4 h-4 text-primary" />
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                    <motion.h4
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="font-display text-2xl font-bold text-foreground mb-2"
+                    >
+                      Challenge Received!
+                    </motion.h4>
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-muted-foreground"
+                    >
+                      Thank you for sharing. I'll respond with insights shortly.
+                    </motion.p>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="form"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
                   >
-                    <option value="">Select area...</option>
-                    {functionalAreas.map((area) => (
-                      <option key={area} value={area}>{area}</option>
-                    ))}
-                  </select>
-                </div>
+                    <h3 className="font-display text-xl font-semibold text-foreground mb-6">
+                      Share Your Transformation Challenge
+                    </h3>
+                    
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                      {/* Name & Email */}
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-foreground mb-2">
+                            Your Name
+                          </label>
+                          <Input
+                            placeholder="John Smith"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-foreground mb-2">
+                            Email Address
+                          </label>
+                          <Input
+                            type="email"
+                            placeholder="john@company.com"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            required
+                          />
+                        </div>
+                      </div>
 
-                {/* Challenge Description */}
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Describe Your Challenge
-                  </label>
-                  <Textarea
-                    placeholder="Tell me about your transformation challenge, pain points, or areas where you need strategic guidance..."
-                    className="min-h-[120px]"
-                    value={formData.challenge}
-                    onChange={(e) => setFormData({ ...formData, challenge: e.target.value })}
-                    required
-                  />
-                </div>
+                      {/* Organization */}
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">
+                          <Building2 className="w-4 h-4 inline mr-2" />
+                          Organization Name
+                        </label>
+                        <Input
+                          placeholder="Your Company"
+                          value={formData.organization}
+                          onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
+                          required
+                        />
+                      </div>
 
-                {/* Submit Button */}
-                <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      Submit Challenge
-                      <Send className="w-4 h-4 ml-2" />
-                    </>
-                  )}
-                </Button>
-              </form>
+                      {/* Organization Type */}
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">
+                          Organization Type
+                        </label>
+                        <select
+                          className="w-full h-10 px-3 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
+                          value={formData.organizationType}
+                          onChange={(e) => setFormData({ ...formData, organizationType: e.target.value })}
+                          required
+                        >
+                          <option value="">Select type...</option>
+                          {organizationTypes.map((type) => (
+                            <option key={type} value={type}>{type}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Functional Area */}
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">
+                          <Layers className="w-4 h-4 inline mr-2" />
+                          Functional Area
+                        </label>
+                        <select
+                          className="w-full h-10 px-3 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
+                          value={formData.functionalArea}
+                          onChange={(e) => setFormData({ ...formData, functionalArea: e.target.value })}
+                          required
+                        >
+                          <option value="">Select area...</option>
+                          {functionalAreas.map((area) => (
+                            <option key={area} value={area}>{area}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Challenge Description */}
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">
+                          Describe Your Challenge
+                        </label>
+                        <Textarea
+                          placeholder="Tell me about your transformation challenge, pain points, or areas where you need strategic guidance..."
+                          className="min-h-[120px]"
+                          value={formData.challenge}
+                          onChange={(e) => setFormData({ ...formData, challenge: e.target.value })}
+                          required
+                        />
+                      </div>
+
+                      {/* Submit Button */}
+                      <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Submitting...
+                          </>
+                        ) : (
+                          <>
+                            Submit Challenge
+                            <Send className="w-4 h-4 ml-2" />
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { format, addDays, isSameDay, isWeekend, setHours, setMinutes } from "date-fns";
-import { Calendar, Clock, User, Mail, MessageSquare, CheckCircle, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { format, addDays, isSameDay, isWeekend } from "date-fns";
+import { motion } from "framer-motion";
+import { Calendar, Clock, User, Mail, MessageSquare, CheckCircle, ChevronLeft, ChevronRight, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -341,27 +342,80 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
 
           {step === 3 && (
             <div className="text-center py-8">
-              <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-8 h-8 text-green-500" />
-              </div>
-              <h4 className="font-display text-2xl font-bold text-foreground mb-2">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6 relative"
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <CheckCircle className="w-10 h-10 text-green-500" />
+                </motion.div>
+                {[...Array(6)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                    animate={{ 
+                      opacity: [0, 1, 0], 
+                      scale: [0, 1, 0.5],
+                      x: Math.cos(i * 60 * Math.PI / 180) * 60,
+                      y: Math.sin(i * 60 * Math.PI / 180) * 60
+                    }}
+                    transition={{ delay: 0.3 + i * 0.1, duration: 0.8 }}
+                    className="absolute"
+                  >
+                    <Sparkles className="w-4 h-4 text-primary" />
+                  </motion.div>
+                ))}
+              </motion.div>
+              <motion.h4
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="font-display text-2xl font-bold text-foreground mb-2"
+              >
                 Consultation Scheduled!
-              </h4>
-              <p className="text-muted-foreground mb-4">
+              </motion.h4>
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="text-muted-foreground mb-4"
+              >
                 Your 30-minute discovery call has been booked for:
-              </p>
-              <div className="bg-muted/50 rounded-xl p-4 mb-6 inline-block">
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 }}
+                className="bg-muted/50 rounded-xl p-4 mb-6 inline-block"
+              >
                 <p className="font-semibold text-foreground">
                   {selectedDate && format(selectedDate, "EEEE, MMMM d, yyyy")}
                 </p>
                 <p className="text-primary font-medium">{selectedTime} (NZST)</p>
-              </div>
-              <p className="text-sm text-muted-foreground mb-6">
+              </motion.div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="text-sm text-muted-foreground mb-6"
+              >
                 You'll receive a confirmation email with meeting details shortly.
-              </p>
-              <Button variant="hero" onClick={handleClose}>
-                Done
-              </Button>
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+              >
+                <Button variant="hero" onClick={handleClose}>
+                  Done
+                </Button>
+              </motion.div>
             </div>
           )}
         </div>
