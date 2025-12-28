@@ -23,9 +23,52 @@ export function ContactSection() {
     subject: "",
     message: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateField = (field: string, value: string) => {
+    if (!value.trim()) {
+      return `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+    }
+    if (field === "email" && !validateEmail(value)) {
+      return "Please enter a valid email address";
+    }
+    return "";
+  };
+
+  const handleBlur = (field: string) => {
+    setTouched({ ...touched, [field]: true });
+    const error = validateField(field, formData[field as keyof typeof formData]);
+    setErrors({ ...errors, [field]: error });
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+    if (touched[field]) {
+      const error = validateField(field, value);
+      setErrors({ ...errors, [field]: error });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    Object.keys(formData).forEach((field) => {
+      const error = validateField(field, formData[field as keyof typeof formData]);
+      if (error) newErrors[field] = error;
+    });
+    setErrors(newErrors);
+    setTouched({ name: true, email: true, subject: true, message: true });
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setIsSubmitting(true);
 
     const currentDateTime = new Date().toLocaleString("en-US", {
@@ -255,9 +298,13 @@ export function ContactSection() {
                           <Input
                             placeholder="John Smith"
                             value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            required
+                            onChange={(e) => handleChange("name", e.target.value)}
+                            onBlur={() => handleBlur("name")}
+                            className={errors.name && touched.name ? "border-destructive focus-visible:ring-destructive" : ""}
                           />
+                          {errors.name && touched.name && (
+                            <p className="text-destructive text-xs mt-1">{errors.name}</p>
+                          )}
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-foreground mb-2">
@@ -267,9 +314,13 @@ export function ContactSection() {
                             type="email"
                             placeholder="john@company.com"
                             value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            required
+                            onChange={(e) => handleChange("email", e.target.value)}
+                            onBlur={() => handleBlur("email")}
+                            className={errors.email && touched.email ? "border-destructive focus-visible:ring-destructive" : ""}
                           />
+                          {errors.email && touched.email && (
+                            <p className="text-destructive text-xs mt-1">{errors.email}</p>
+                          )}
                         </div>
                       </div>
 
@@ -280,9 +331,13 @@ export function ContactSection() {
                         <Input
                           placeholder="How can I help you?"
                           value={formData.subject}
-                          onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                          required
+                          onChange={(e) => handleChange("subject", e.target.value)}
+                          onBlur={() => handleBlur("subject")}
+                          className={errors.subject && touched.subject ? "border-destructive focus-visible:ring-destructive" : ""}
                         />
+                        {errors.subject && touched.subject && (
+                          <p className="text-destructive text-xs mt-1">{errors.subject}</p>
+                        )}
                       </div>
 
                       <div>
@@ -291,11 +346,14 @@ export function ContactSection() {
                         </label>
                         <Textarea
                           placeholder="Tell me about your inquiry, project, or collaboration idea..."
-                          className="min-h-[150px]"
+                          className={`min-h-[150px] ${errors.message && touched.message ? "border-destructive focus-visible:ring-destructive" : ""}`}
                           value={formData.message}
-                          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                          required
+                          onChange={(e) => handleChange("message", e.target.value)}
+                          onBlur={() => handleBlur("message")}
                         />
+                        {errors.message && touched.message && (
+                          <p className="text-destructive text-xs mt-1">{errors.message}</p>
+                        )}
                       </div>
 
                       <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>

@@ -47,9 +47,60 @@ export function ChallengeSection() {
     functionalArea: "",
     challenge: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateField = (field: string, value: string) => {
+    const fieldLabels: Record<string, string> = {
+      name: "Name",
+      email: "Email",
+      organization: "Organization",
+      organizationType: "Organization type",
+      functionalArea: "Functional area",
+      challenge: "Challenge description",
+    };
+    if (!value.trim()) {
+      return `${fieldLabels[field]} is required`;
+    }
+    if (field === "email" && !validateEmail(value)) {
+      return "Please enter a valid email address";
+    }
+    return "";
+  };
+
+  const handleBlur = (field: string) => {
+    setTouched({ ...touched, [field]: true });
+    const error = validateField(field, formData[field as keyof typeof formData]);
+    setErrors({ ...errors, [field]: error });
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+    if (touched[field]) {
+      const error = validateField(field, value);
+      setErrors({ ...errors, [field]: error });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    Object.keys(formData).forEach((field) => {
+      const error = validateField(field, formData[field as keyof typeof formData]);
+      if (error) newErrors[field] = error;
+    });
+    setErrors(newErrors);
+    setTouched({ name: true, email: true, organization: true, organizationType: true, functionalArea: true, challenge: true });
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setIsSubmitting(true);
 
     const currentDateTime = new Date().toLocaleString("en-US", {
@@ -298,9 +349,13 @@ export function ChallengeSection() {
                           <Input
                             placeholder="John Smith"
                             value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            required
+                            onChange={(e) => handleChange("name", e.target.value)}
+                            onBlur={() => handleBlur("name")}
+                            className={errors.name && touched.name ? "border-destructive focus-visible:ring-destructive" : ""}
                           />
+                          {errors.name && touched.name && (
+                            <p className="text-destructive text-xs mt-1">{errors.name}</p>
+                          )}
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-foreground mb-2">
@@ -310,9 +365,13 @@ export function ChallengeSection() {
                             type="email"
                             placeholder="john@company.com"
                             value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            required
+                            onChange={(e) => handleChange("email", e.target.value)}
+                            onBlur={() => handleBlur("email")}
+                            className={errors.email && touched.email ? "border-destructive focus-visible:ring-destructive" : ""}
                           />
+                          {errors.email && touched.email && (
+                            <p className="text-destructive text-xs mt-1">{errors.email}</p>
+                          )}
                         </div>
                       </div>
 
@@ -325,9 +384,13 @@ export function ChallengeSection() {
                         <Input
                           placeholder="Your Company"
                           value={formData.organization}
-                          onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                          required
+                          onChange={(e) => handleChange("organization", e.target.value)}
+                          onBlur={() => handleBlur("organization")}
+                          className={errors.organization && touched.organization ? "border-destructive focus-visible:ring-destructive" : ""}
                         />
+                        {errors.organization && touched.organization && (
+                          <p className="text-destructive text-xs mt-1">{errors.organization}</p>
+                        )}
                       </div>
 
                       {/* Organization Type */}
@@ -336,16 +399,21 @@ export function ChallengeSection() {
                           Organization Type
                         </label>
                         <select
-                          className="w-full h-10 px-3 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
+                          className={`w-full h-10 px-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent ${
+                            errors.organizationType && touched.organizationType ? "border-destructive" : "border-border"
+                          }`}
                           value={formData.organizationType}
-                          onChange={(e) => setFormData({ ...formData, organizationType: e.target.value })}
-                          required
+                          onChange={(e) => handleChange("organizationType", e.target.value)}
+                          onBlur={() => handleBlur("organizationType")}
                         >
                           <option value="">Select type...</option>
                           {organizationTypes.map((type) => (
                             <option key={type} value={type}>{type}</option>
                           ))}
                         </select>
+                        {errors.organizationType && touched.organizationType && (
+                          <p className="text-destructive text-xs mt-1">{errors.organizationType}</p>
+                        )}
                       </div>
 
                       {/* Functional Area */}
@@ -355,16 +423,21 @@ export function ChallengeSection() {
                           Functional Area
                         </label>
                         <select
-                          className="w-full h-10 px-3 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
+                          className={`w-full h-10 px-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent ${
+                            errors.functionalArea && touched.functionalArea ? "border-destructive" : "border-border"
+                          }`}
                           value={formData.functionalArea}
-                          onChange={(e) => setFormData({ ...formData, functionalArea: e.target.value })}
-                          required
+                          onChange={(e) => handleChange("functionalArea", e.target.value)}
+                          onBlur={() => handleBlur("functionalArea")}
                         >
                           <option value="">Select area...</option>
                           {functionalAreas.map((area) => (
                             <option key={area} value={area}>{area}</option>
                           ))}
                         </select>
+                        {errors.functionalArea && touched.functionalArea && (
+                          <p className="text-destructive text-xs mt-1">{errors.functionalArea}</p>
+                        )}
                       </div>
 
                       {/* Challenge Description */}
@@ -374,11 +447,14 @@ export function ChallengeSection() {
                         </label>
                         <Textarea
                           placeholder="Tell me about your transformation challenge, pain points, or areas where you need strategic guidance..."
-                          className="min-h-[120px]"
+                          className={`min-h-[120px] ${errors.challenge && touched.challenge ? "border-destructive focus-visible:ring-destructive" : ""}`}
                           value={formData.challenge}
-                          onChange={(e) => setFormData({ ...formData, challenge: e.target.value })}
-                          required
+                          onChange={(e) => handleChange("challenge", e.target.value)}
+                          onBlur={() => handleBlur("challenge")}
                         />
+                        {errors.challenge && touched.challenge && (
+                          <p className="text-destructive text-xs mt-1">{errors.challenge}</p>
+                        )}
                       </div>
 
                       {/* Submit Button */}
