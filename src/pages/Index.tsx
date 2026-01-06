@@ -9,6 +9,7 @@ import { ChallengeSection } from "@/components/ChallengeSection";
 import { PublicationsSection } from "@/components/PublicationsSection";
 import { PodcastSection } from "@/components/PodcastSection";
 import { Footer } from "@/components/Footer";
+import { AIChatBot } from "@/components/AIChatBot";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
       <PublicationsSection />
       <PodcastSection />
       <Footer />
+      <AIChatBot />
     </main>
   );
 };
