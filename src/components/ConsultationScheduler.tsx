@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import { format, addDays, isSameDay, isWeekend } from "date-fns";
-import { motion } from "framer-motion";
-import { Calendar, Clock, User, Mail, MessageSquare, CheckCircle, ChevronLeft, ChevronRight, Loader2, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calendar, Clock, User, Mail, MessageSquare, CheckCircle, ChevronLeft, ChevronRight, Loader2, Sparkles, Trash2, CalendarX, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import emailjs from "@emailjs/browser";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const EMAILJS_SERVICE_ID = "service_n1s3igu";
 const EMAILJS_TEMPLATE_ID = "template_alsnpb5";
@@ -55,6 +65,12 @@ const saveBooking = (booking: Booking) => {
   localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(bookings));
 };
 
+const deleteBooking = (date: string, time: string): void => {
+  const bookings = getBookings();
+  const filtered = bookings.filter((b) => !(b.date === date && b.time === time));
+  localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(filtered));
+};
+
 const isSlotBooked = (date: Date, time: string): boolean => {
   const bookings = getBookings();
   const dateStr = format(date, "yyyy-MM-dd");
@@ -63,6 +79,13 @@ const isSlotBooked = (date: Date, time: string): boolean => {
 
 const getAvailableSlotsForDate = (date: Date): string[] => {
   return timeSlots.filter((time) => !isSlotBooked(date, time));
+};
+
+const getAvailabilityStatus = (date: Date): { available: number; status: 'full' | 'limited' | 'available' } => {
+  const available = getAvailableSlotsForDate(date).length;
+  if (available === 0) return { available, status: 'full' };
+  if (available <= 2) return { available, status: 'limited' };
+  return { available, status: 'available' };
 };
 
 interface ConsultationSchedulerProps {
@@ -85,6 +108,10 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [showMyBookings, setShowMyBookings] = useState(false);
+  const [myBookings, setMyBookings] = useState<Booking[]>([]);
+  const [bookingToCancel, setBookingToCancel] = useState<Booking | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // Update available slots when date changes
   useEffect(() => {
@@ -96,7 +123,12 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
         setSelectedTime("");
       }
     }
-  }, [selectedDate, selectedTime]);
+  }, [selectedDate, selectedTime, refreshKey]);
+
+  // Load user's bookings
+  useEffect(() => {
+    setMyBookings(getBookings());
+  }, [refreshKey]);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -239,7 +271,26 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
     setTouched({});
     setWeekOffset(0);
     setAvailableSlots(timeSlots);
+    setShowMyBookings(false);
     onClose();
+  };
+
+  const handleCancelBooking = (booking: Booking) => {
+    deleteBooking(booking.date, booking.time);
+    setBookingToCancel(null);
+    setRefreshKey((k) => k + 1);
+    toast({
+      title: "Booking Cancelled",
+      description: `Your consultation on ${format(new Date(booking.date), "MMMM d")} at ${booking.time} has been cancelled.`,
+    });
+  };
+
+  const getFutureBookings = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return myBookings.filter((b) => new Date(b.date) >= today).sort((a, b) => 
+      new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
   };
 
   if (!isOpen) return null;
@@ -333,28 +384,47 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
                 </div>
 
                 <div className="grid grid-cols-5 gap-2">
-                  {weekDays.map((date) => (
-                    <button
-                      key={date.toISOString()}
-                      onClick={() => setSelectedDate(date)}
-                      className={cn(
-                        "p-3 rounded-xl border text-center transition-all",
-                        selectedDate && isSameDay(date, selectedDate)
-                          ? "border-primary bg-primary/10 text-primary"
-                          : "border-border hover:border-primary/50 hover:bg-muted"
-                      )}
-                    >
-                      <div className="text-xs text-muted-foreground">
-                        {format(date, "EEE")}
-                      </div>
-                      <div className="text-lg font-semibold text-foreground">
-                        {format(date, "d")}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {format(date, "MMM")}
-                      </div>
-                    </button>
-                  ))}
+                  {weekDays.map((date) => {
+                    const { available, status } = getAvailabilityStatus(date);
+                    return (
+                      <button
+                        key={date.toISOString()}
+                        onClick={() => status !== 'full' && setSelectedDate(date)}
+                        disabled={status === 'full'}
+                        className={cn(
+                          "p-3 rounded-xl border text-center transition-all relative",
+                          status === 'full'
+                            ? "border-border bg-muted/30 cursor-not-allowed opacity-60"
+                            : selectedDate && isSameDay(date, selectedDate)
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border hover:border-primary/50 hover:bg-muted"
+                        )}
+                      >
+                        <div className="text-xs text-muted-foreground">
+                          {format(date, "EEE")}
+                        </div>
+                        <div className="text-lg font-semibold text-foreground">
+                          {format(date, "d")}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {format(date, "MMM")}
+                        </div>
+                        {/* Availability Indicator */}
+                        <div className="mt-1 flex justify-center">
+                          {status === 'full' ? (
+                            <span className="text-[10px] text-destructive font-medium">Full</span>
+                          ) : status === 'limited' ? (
+                            <span className="flex items-center gap-0.5 text-[10px] text-amber-500 font-medium">
+                              <AlertCircle className="w-3 h-3" />
+                              {available} left
+                            </span>
+                          ) : (
+                            <span className="w-2 h-2 rounded-full bg-green-500" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -395,14 +465,68 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
                 </div>
               )}
 
-              <Button
-                variant="hero"
-                className="w-full"
-                disabled={!selectedDate || !selectedTime}
-                onClick={() => setStep(2)}
-              >
-                Continue
-              </Button>
+              <div className="flex gap-3">
+                <Button
+                  variant="hero"
+                  className="flex-1"
+                  disabled={!selectedDate || !selectedTime}
+                  onClick={() => setStep(2)}
+                >
+                  Continue
+                </Button>
+              </div>
+
+              {/* My Bookings Toggle */}
+              {getFutureBookings().length > 0 && (
+                <div className="border-t border-border pt-4 mt-4">
+                  <button
+                    onClick={() => setShowMyBookings(!showMyBookings)}
+                    className="w-full flex items-center justify-between text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <CalendarX className="w-4 h-4" />
+                      My Bookings ({getFutureBookings().length})
+                    </span>
+                    <ChevronRight className={cn("w-4 h-4 transition-transform", showMyBookings && "rotate-90")} />
+                  </button>
+
+                  <AnimatePresence>
+                    {showMyBookings && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="space-y-2 mt-3">
+                          {getFutureBookings().map((booking) => (
+                            <div
+                              key={`${booking.date}-${booking.time}`}
+                              className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border border-border"
+                            >
+                              <div>
+                                <p className="text-sm font-medium text-foreground">
+                                  {format(new Date(booking.date), "EEE, MMM d")} at {booking.time}
+                                </p>
+                                <p className="text-xs text-muted-foreground">{booking.name}</p>
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                                onClick={() => setBookingToCancel(booking)}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
             </div>
           )}
 
@@ -575,6 +699,31 @@ export function ConsultationScheduler({ isOpen, onClose }: ConsultationScheduler
           )}
         </div>
       </div>
+
+      {/* Cancel Booking Confirmation Dialog */}
+      <AlertDialog open={!!bookingToCancel} onOpenChange={() => setBookingToCancel(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel Booking?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to cancel your consultation on{" "}
+              <strong>
+                {bookingToCancel && format(new Date(bookingToCancel.date), "EEEE, MMMM d")} at {bookingToCancel?.time}
+              </strong>
+              ? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep Booking</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => bookingToCancel && handleCancelBooking(bookingToCancel)}
+            >
+              Cancel Booking
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
