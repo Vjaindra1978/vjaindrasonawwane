@@ -39,10 +39,10 @@ const iconColors = {
 
 export function RecognitionsSection() {
   return (
-    <section id="recognitions" className="py-16 bg-background">
+    <section id="recognitions" className="py-10 bg-background">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12">
+        <div className="max-w-3xl mx-auto text-center mb-8">
           <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
             Recognition & Leadership
           </span>
@@ -91,7 +91,7 @@ export function RecognitionsSection() {
         </div>
 
         {/* Additional Context */}
-        <div className="mt-10 max-w-3xl mx-auto text-center">
+        <div className="mt-6 max-w-3xl mx-auto text-center">
           <p className="text-muted-foreground text-sm">
             Continuously contributing to the industry through speaking engagements, 
             training programs, and thought leadership initiatives.

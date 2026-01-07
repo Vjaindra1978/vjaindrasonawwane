@@ -214,11 +214,11 @@ export function KnowledgePodcastSection() {
   const comingSoonContent = getComingSoonContent();
 
   return (
-    <section id="publications" className="py-20 bg-gradient-to-b from-background to-card/30">
+    <section id="publications" className="py-10 bg-gradient-to-b from-background to-card/30">
       <div className="container mx-auto px-6">
         {/* Unified Header */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -237,7 +237,7 @@ export function KnowledgePodcastSection() {
 
         {/* Newsletter - Compact */}
         <motion.div 
-          className="max-w-lg mx-auto mb-12"
+          className="max-w-lg mx-auto mb-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
