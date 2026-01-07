@@ -6,8 +6,7 @@ import { CapabilitiesSection } from "@/components/CapabilitiesSection";
 import { RecognitionsSection } from "@/components/RecognitionsSection";
 import { QuotesSection } from "@/components/QuotesSection";
 import { ChallengeSection } from "@/components/ChallengeSection";
-import { PublicationsSection } from "@/components/PublicationsSection";
-import { PodcastSection } from "@/components/PodcastSection";
+import { KnowledgePodcastSection } from "@/components/KnowledgePodcastSection";
 import { Footer } from "@/components/Footer";
 import { AIChatBot } from "@/components/AIChatBot";
 
@@ -22,8 +21,7 @@ const Index = () => {
       <RecognitionsSection />
       <QuotesSection />
       <ChallengeSection />
-      <PublicationsSection />
-      <PodcastSection />
+      <KnowledgePodcastSection />
       <Footer />
       <AIChatBot />
     </main>
