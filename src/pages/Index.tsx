@@ -9,6 +9,7 @@ import { ChallengeSection } from "@/components/ChallengeSection";
 import { KnowledgePodcastSection } from "@/components/KnowledgePodcastSection";
 import { Footer } from "@/components/Footer";
 import { AIChatBot } from "@/components/AIChatBot";
+import { BackToTop } from "@/components/BackToTop";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
       <KnowledgePodcastSection />
       <Footer />
       <AIChatBot />
+      <BackToTop />
     </main>
   );
 };
