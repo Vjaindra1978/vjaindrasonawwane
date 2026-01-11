@@ -38,7 +38,7 @@ export function Footer() {
               <div className="w-10 h-10 rounded-lg bg-gradient-gold flex items-center justify-center">
                 <span className="text-primary-foreground font-display font-bold text-xl">V</span>
               </div>
-              <span className="font-display text-lg font-semibold text-foreground">Vjaindra Sonawane</span>
+              <span className="font-display text-lg font-semibold text-foreground">Vjaindra Sonawwane</span>
             </div>
             <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
               Strategic IT & Digital Transformation Leader with 20+ years of international experience driving enterprise innovation and growth.
@@ -121,7 +121,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-muted-foreground text-xs">
-            © {new Date().getFullYear()} Vjaindra Sonawane. All rights reserved.
+            © {new Date().getFullYear()} Vjaindra Sonawwane. All rights reserved.
           </p>
           <p className="text-muted-foreground text-xs">Auckland, New Zealand • Dubai, UAE • Mumbai, India</p>
         </div>
