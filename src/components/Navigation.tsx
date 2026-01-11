@@ -22,10 +22,6 @@ const navItems = [
     label: "Podcast",
     href: "#podcast",
   },
-  {
-    label: "Connect",
-    href: "#connect",
-  },
 ];
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
