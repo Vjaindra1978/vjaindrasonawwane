@@ -10,9 +10,15 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
 
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Lora&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
+
 @layer base {
   :root {
-    --background: 220 20% 8%;
+    --background: 218 95% 30%;
     --foreground: 210 40% 98%;
 
     --card: 220 18% 12%;
