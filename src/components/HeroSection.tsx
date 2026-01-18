@@ -23,9 +23,6 @@ export function HeroSection() {
     backgroundRepeat: "no-repeat",
   }}
 />
-
-{/* Dark overlay */}
-<div className="absolute inset-0 bg-black/60" />
       {/* Light Gradient Overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/40" />
