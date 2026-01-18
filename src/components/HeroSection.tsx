@@ -17,17 +17,11 @@ export function HeroSection() {
       <div
         className="absolute inset-0 w-full h-full"
      style={{
-  backgroundImage: `linear-gradient(
-      rgba(0, 0, 0, 0.35),
-      rgba(0, 0, 0, 0.35)
-    ), url(${heroBg})`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  backgroundAttachment: "fixed",
-  width: "100%",
-  minHeight: "100vh",
-}}
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center 30%",
+          backgroundRepeat: "no-repeat",
+        }}
 
       />
       {/* Light Gradient Overlay for readability */}
