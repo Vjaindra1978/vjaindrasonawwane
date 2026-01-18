@@ -14,20 +14,19 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Full Background Image - Light Theme */}
-  <div
+<div
   className="absolute inset-0 w-full h-full"
   style={{
     backgroundImage: `
       linear-gradient(
-        rgba(0, 0, 0, 0.55),
-        rgba(0, 0, 0, 0.55)
+        rgba(0, 0, 0, 0.60),
+        rgba(0, 0, 0, 0.60)
       ),
-       url(${heroBg})
+      url(${heroBg})
     `,
-    backgroundSize: "contain",
+    backgroundSize: "contain",   // no stretching
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-      {/*backgroundAttachment: "fixed",*/}
   }}
 />
       {/* Light Gradient Overlay for readability */}
