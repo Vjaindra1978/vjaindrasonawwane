@@ -13,20 +13,19 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Full Background Image - Natural Coverage */}
+      {/* Full Background Image - Light Theme */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
-          backgroundImage: `url(${heroBg})`, // same image
-          backgroundSize: "contain", // CHANGED (key fix)
-          backgroundPosition: "center 40%", // CHANGED
-          backgroundRepeat: "no-repeat", // same
-          backgroundColor: "#000000", // ADDED (fills empty space)
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center 40%",
+          backgroundRepeat: "no-repeat",
         }}
       />
-      {/* Gradient Overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/50" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
+      {/* Light Gradient Overlay for readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/40" />
 
       <div className="container relative z-10 mx-auto px-6">
         <div className="max-w-5xl mx-auto text-center">
