@@ -14,15 +14,20 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Full Background Image - Light Theme */}
-<div
-  className="absolute inset-0 w-full h-full"
-  style={{
-    backgroundImage: `url(${heroBg})`,
-    backgroundSize: "contain",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  }}
-/>
+{/* Background Image */}
+      <div
+        className="absolute inset-0 w-full h-full"
+        style={{
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: "contain",    // preserves aspect ratio
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/70" />
+
       {/* Light Gradient Overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/40" />
