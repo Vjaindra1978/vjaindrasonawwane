@@ -26,7 +26,7 @@ export function HeroSection() {
       />
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/25" />
+      <div className="absolute inset-0 bg-black/15" />
       {/* Background Image vjaindra Sonawwane */}
 
       {/* Light Gradient Overlay for readability */}
