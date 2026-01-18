@@ -16,12 +16,19 @@ export function HeroSection() {
       {/* Full Background Image - Light Theme */}
       <div
         className="absolute inset-0 w-full h-full"
-        style={{
-          backgroundImage: `url(${heroBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center 75%",
-          backgroundRepeat: "no-repeat",
-        }}
+     style={{
+  backgroundImage: `linear-gradient(
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.35)
+    ), url(${heroBg})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  backgroundAttachment: "fixed",
+  width: "100%",
+  minHeight: "100vh",
+}}
+
       />
       {/* Light Gradient Overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
