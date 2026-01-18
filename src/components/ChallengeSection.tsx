@@ -236,9 +236,11 @@ export function ChallengeSection() {
             </div>
 
             {/* Schedule Consultation CTA */}
-            <div className="bg-gradient-card border border-border rounded-xl p-5">
+            <div className="bg-card border border-border rounded-xl p-5">
               <div className="flex items-center gap-3 mb-3">
-                <Calendar className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-lg bg-gradient-gold flex items-center justify-center">
+                  <Calendar className="w-5 h-5 text-primary-foreground" />
+                </div>
                 <h4 className="font-display text-base font-semibold text-foreground">
                   Schedule a Consultation
                 </h4>
