@@ -25,7 +25,7 @@ export function HeroSection() {
       url(${heroBg})
     `,
     backgroundSize: "contain",   // no stretching
-    backgroundPosition: "center",
+    backgroundPosition: "center 55%",
     backgroundRepeat: "no-repeat",
   }}
 />
