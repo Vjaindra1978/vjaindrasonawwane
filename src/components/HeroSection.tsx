@@ -19,7 +19,7 @@ export function HeroSection() {
         className="absolute inset-0 w-full h-full"
         style={{
           backgroundImage: `url(${heroBg})`,
-          backgroundSize: "cover",       // fill full section while keeping aspect ratio
+          backgroundSize: "contain",       // Preserves aspect ration
           backgroundPosition: "center",  // center image
           backgroundRepeat: "no-repeat",
         }}
