@@ -20,7 +20,7 @@ export function HeroSection() {
         style={{
           backgroundImage: `url(${heroBg})`,
           backgroundSize: "contain",    // preserves aspect ratio
-          backgroundPosition: "center",
+          backgroundPosition: "center 40%",
           backgroundRepeat: "no-repeat",
         }}
       />
