@@ -195,9 +195,11 @@ export function ContactSection() {
             </div>
 
             {/* Schedule Meeting CTA */}
-            <div className="bg-gradient-card border border-border rounded-xl p-6">
+            <div className="bg-card border border-border rounded-xl p-6">
               <div className="flex items-center gap-3 mb-4">
-                <Calendar className="w-6 h-6 text-primary" />
+                <div className="w-10 h-10 rounded-lg bg-gradient-gold flex items-center justify-center">
+                  <Calendar className="w-5 h-5 text-primary-foreground" />
+                </div>
                 <h4 className="font-display text-lg font-semibold text-foreground">
                   Schedule a Consultation
                 </h4>
