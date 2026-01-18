@@ -14,19 +14,20 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Full Background Image - Light Theme */}
-{/* Background Image */}
+{/* Background Image vjaindra Sonawwane */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
           backgroundImage: `url(${heroBg})`,
-          backgroundSize: "contain",    // preserves aspect ratio
-          backgroundPosition: "center 35%",
+          backgroundSize: "cover",       // fill full section while keeping aspect ratio
+          backgroundPosition: "center",  // center image
           backgroundRepeat: "no-repeat",
         }}
       />
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/70" />
+      <div className="absolute inset-0 bg-black/40" />
+      {/* Background Image vjaindra Sonawwane */}
 
       {/* Light Gradient Overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
