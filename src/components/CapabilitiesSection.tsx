@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { 
-  Lightbulb, 
-  Building2, 
-  ShoppingCart, 
-  Database, 
-  Cloud, 
-  Shield, 
-  Heart, 
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Lightbulb,
+  Building2,
+  ShoppingCart,
+  Database,
+  Cloud,
+  Shield,
+  Heart,
   Bot,
-  ChevronRight
+  ArrowRight,
+  CheckCircle,
+  AlertTriangle,
 } from "lucide-react";
-import { ScrollReveal } from "./ScrollReveal";
-import { motion } from "framer-motion";
 
 const capabilities = [
   {
@@ -46,7 +47,7 @@ const capabilities = [
   },
   {
     icon: ShoppingCart,
-    title: "ERP, POS & Omnichannel Platforms",
+    title: "ERP, POS & Omnichannel",
     description: "Leading ERP and POS transformations across Microsoft D365, Oracle Hospitality, and other enterprise platforms for unified operations.",
     challenges: [
       "Outdated ERP limiting business agility",
@@ -76,7 +77,7 @@ const capabilities = [
   },
   {
     icon: Cloud,
-    title: "Cloud Platforms & Infrastructure",
+    title: "Cloud & Infrastructure",
     description: "Migrating legacy systems to Azure, AWS, and Oracle Cloud with focus on scalability, resilience, and cost optimization.",
     challenges: [
       "On-premise infrastructure limiting scale",
@@ -141,96 +142,87 @@ export function CapabilitiesSection() {
   const activeCapability = capabilities[activeIndex];
 
   return (
-    <section id="capabilities" className="py-16 bg-background">
-      <div className="container mx-auto px-6">
+    <section id="capabilities" className="py-24 lg:py-32 bg-secondary/30">
+      <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
-        <ScrollReveal variant="fadeUp">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
-              Advisory Services
-            </span>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
-              How I Help Organizations{' '}
-              <span className="text-gradient-gold">Transform</span>
-            </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              Strategic advisory across the full spectrum of digital transformation, 
-              from vision to execution.
-            </p>
-          </div>
-        </ScrollReveal>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-2xl mb-16"
+        >
+          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">
+            Advisory Services
+          </p>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">
+            Capability <span className="text-gradient-gold">Domains</span>
+          </h2>
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Strategic advisory across the full spectrum of digital transformation, from vision to execution.
+          </p>
+        </motion.div>
 
-        {/* Capabilities Layout */}
-        <ScrollReveal variant="fadeUp" delay={0.2}>
-          <div className="grid lg:grid-cols-12 gap-8">
-          {/* Capability List */}
-          <div className="lg:col-span-4 space-y-2">
+        {/* Two Column Layout */}
+        <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
+          {/* Left - Capability List */}
+          <div className="lg:col-span-2 space-y-1">
             {capabilities.map((cap, index) => (
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
-                className={`w-full flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-300 ${
+                className={`w-full text-left py-4 px-4 border-l-2 transition-all duration-300 ${
                   activeIndex === index
-                    ? "bg-primary/10 border border-primary/30"
-                    : "bg-card border border-transparent hover:bg-card/80 hover:border-border"
+                    ? "border-foreground bg-background"
+                    : "border-transparent hover:border-muted-foreground/30"
                 }`}
               >
-                <div
-                  className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
-                    activeIndex === index ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground"
-                  }`}
-                >
-                  <cap.icon className="w-5 h-5" />
+                <div className="flex items-center gap-4">
+                  <cap.icon className={`w-5 h-5 ${activeIndex === index ? "text-foreground" : "text-muted-foreground"}`} />
+                  <span className={`font-display text-lg ${activeIndex === index ? "text-foreground" : "text-muted-foreground"}`}>
+                    {cap.title}
+                  </span>
                 </div>
-                <span
-                  className={`font-medium flex-1 ${
-                    activeIndex === index ? "text-foreground" : "text-muted-foreground"
-                  }`}
-                >
-                  {cap.title}
-                </span>
-                <ChevronRight
-                  className={`w-5 h-5 transition-transform ${
-                    activeIndex === index ? "text-primary rotate-90" : "text-muted-foreground"
-                  }`}
-                />
               </button>
             ))}
           </div>
 
-          {/* Capability Detail */}
-          <div className="lg:col-span-8">
-            <motion.div 
-              key={activeIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-              className="bg-card border border-border rounded-2xl p-8 lg:p-10 h-full"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <activeCapability.icon className="w-7 h-7 text-primary" />
+          {/* Right - Active Capability Detail */}
+          <div className="lg:col-span-3">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+                className="bg-background border border-border p-8 lg:p-10"
+              >
+                {/* Header */}
+                <div className="flex items-start gap-4 mb-8">
+                  <div className="w-14 h-14 flex items-center justify-center border border-border">
+                    <activeCapability.icon className="w-6 h-6 text-foreground" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-2xl text-foreground mb-2">
+                      {activeCapability.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {activeCapability.description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-foreground">
-                  {activeCapability.title}
-                </h3>
-              </div>
 
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                {activeCapability.description}
-              </p>
-
-              <div className="grid md:grid-cols-2 gap-8">
                 {/* Challenges */}
-                <div>
-                  <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-destructive" />
+                <div className="mb-8">
+                  <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4 flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4" />
                     Common Challenges
                   </h4>
                   <ul className="space-y-3">
                     {activeCapability.challenges.map((challenge, i) => (
-                      <li key={i} className="flex items-start gap-3 text-muted-foreground">
-                        <span className="text-destructive mt-1">•</span>
+                      <li key={i} className="flex items-start gap-3 text-muted-foreground text-sm">
+                        <span className="w-1 h-1 rounded-full bg-muted-foreground mt-2 flex-shrink-0" />
                         {challenge}
                       </li>
                     ))}
@@ -239,24 +231,23 @@ export function CapabilitiesSection() {
 
                 {/* Outcomes */}
                 <div>
-                  <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-primary" />
+                  <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4 flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4" />
                     Expected Outcomes
                   </h4>
                   <ul className="space-y-3">
                     {activeCapability.outcomes.map((outcome, i) => (
-                      <li key={i} className="flex items-start gap-3 text-muted-foreground">
-                        <span className="text-primary mt-1">✓</span>
+                      <li key={i} className="flex items-start gap-3 text-foreground text-sm">
+                        <ArrowRight className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
                         {outcome}
                       </li>
                     ))}
                   </ul>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
-        </ScrollReveal>
       </div>
     </section>
   );

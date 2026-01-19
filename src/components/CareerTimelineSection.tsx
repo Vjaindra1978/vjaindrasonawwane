@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Briefcase, MapPin, ChevronDown } from "lucide-react";
+import { Briefcase, MapPin, ChevronRight } from "lucide-react";
 
 interface CareerItem {
   period: string;
@@ -69,7 +69,7 @@ const careerData: CareerItem[] = [
   {
     period: "Jun 2010 – Sep 2014",
     role: "IT Manager",
-    company: "Landmark Group Hospitality (Food Mark)",
+    company: "Landmark Group Hospitality",
     location: "Dubai, UAE",
     responsibilities: [
       "Managed Oracle CRM & ERP solutions for hospitality division",
@@ -103,214 +103,115 @@ const careerData: CareerItem[] = [
 
 export function CareerTimelineSection() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [isPaused, setIsPaused] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  // Auto-scroll animation for the ribbon
-  useEffect(() => {
-    if (isPaused || selectedIndex !== null) return;
-    
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    let animationId: number;
-    let scrollPos = 0;
-    const speed = 0.5;
-
-    const animate = () => {
-      scrollPos += speed;
-      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      
-      if (scrollPos >= maxScroll) {
-        scrollPos = 0;
-      }
-      
-      scrollContainer.scrollLeft = scrollPos;
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animationId = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(animationId);
-  }, [isPaused, selectedIndex]);
 
   return (
-    <section id="career" className="py-16 bg-card/30 overflow-hidden">
-      <div className="container mx-auto px-6">
+    <section id="career" className="py-24 lg:py-32 bg-background">
+      <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto text-center mb-10"
+          className="max-w-2xl mb-16"
         >
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">
             Professional Journey
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          </p>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">
             Career <span className="text-gradient-gold">Timeline</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
-            20+ years of progressive leadership across global enterprises
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            20+ years of progressive leadership across global enterprises in hospitality, retail, and technology.
           </p>
         </motion.div>
-      </div>
 
-      {/* Scrolling Ribbon - Full Width */}
-      <div 
-        ref={scrollRef}
-        className="relative w-full overflow-hidden py-4"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        {/* Gradient Fade Edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-card/30 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-card/30 to-transparent z-10 pointer-events-none" />
-        
-        {/* Scrolling Items */}
-        <div className="flex gap-4 px-6 w-max">
-          {/* Double the items for seamless loop */}
-          {[...careerData, ...careerData].map((item, index) => {
-            const actualIndex = index % careerData.length;
-            return (
-              <motion.button
-                key={index}
-                onClick={() => setSelectedIndex(selectedIndex === actualIndex ? null : actualIndex)}
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className={`flex-shrink-0 min-w-[280px] max-w-[320px] p-4 rounded-xl border text-left transition-all duration-300 ${
-                  selectedIndex === actualIndex 
-                    ? 'bg-primary/10 border-primary shadow-lg shadow-primary/20' 
-                    : 'bg-card border-border hover:border-primary/50'
-                }`}
+        {/* Timeline */}
+        <div className="space-y-0">
+          {careerData.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+            >
+              <button
+                onClick={() => setSelectedIndex(selectedIndex === index ? null : index)}
+                className="w-full text-left py-6 border-t border-border group"
               >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-display font-bold text-foreground text-sm truncate">
-                      {item.company}
-                    </h3>
-                    <p className="text-primary text-xs font-medium truncate">
-                      {item.role}
+                <div className="grid grid-cols-12 gap-4 items-start">
+                  {/* Period */}
+                  <div className="col-span-12 sm:col-span-3 lg:col-span-2">
+                    <p className="text-xs text-muted-foreground tracking-wider">
+                      {item.period}
                     </p>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-300 flex-shrink-0 ${
-                    selectedIndex === actualIndex ? 'rotate-180 text-primary' : ''
-                  }`} />
+
+                  {/* Company & Role */}
+                  <div className="col-span-10 sm:col-span-8 lg:col-span-9">
+                    <h3 className="font-display text-lg lg:text-xl text-foreground group-hover:opacity-70 transition-opacity">
+                      {item.company}
+                    </h3>
+                    <p className="text-muted-foreground text-sm mt-1">
+                      {item.role}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      {item.location}
+                    </p>
+                  </div>
+
+                  {/* Arrow */}
+                  <div className="col-span-2 sm:col-span-1 flex justify-end">
+                    <ChevronRight
+                      className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${
+                        selectedIndex === index ? "rotate-90" : ""
+                      }`}
+                    />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    {item.location}
-                  </span>
-                  <span className="font-medium">{item.period}</span>
-                </div>
-              </motion.button>
-            );
-          })}
+              </button>
+
+              {/* Expanded Content */}
+              <AnimatePresence>
+                {selectedIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pb-6 pl-0 sm:pl-[25%] lg:pl-[16.67%]">
+                      <div className="border-l border-border pl-6">
+                        <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4 flex items-center gap-2">
+                          <Briefcase className="w-4 h-4" />
+                          Key Responsibilities
+                        </h4>
+                        <ul className="space-y-3">
+                          {item.responsibilities.map((resp, i) => (
+                            <motion.li
+                              key={i}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.1 }}
+                              className="text-muted-foreground text-sm flex items-start gap-3"
+                            >
+                              <span className="w-1 h-1 rounded-full bg-accent mt-2 flex-shrink-0" />
+                              {resp}
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
         </div>
       </div>
-
-      {/* Expanded Responsibilities Panel */}
-      <AnimatePresence mode="wait">
-        {selectedIndex !== null && (
-          <motion.div
-            key={selectedIndex}
-            initial={{ opacity: 0, y: 20, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: "auto" }}
-            exit={{ opacity: 0, y: -20, height: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="container mx-auto px-6 overflow-hidden"
-          >
-            <motion.div 
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
-              className="max-w-4xl mx-auto mt-8 p-6 bg-gradient-to-br from-card via-card to-primary/5 border border-primary/30 rounded-2xl shadow-xl"
-            >
-              {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                <div>
-                  <motion.h3 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="font-display text-xl sm:text-2xl font-bold text-foreground"
-                  >
-                    {careerData[selectedIndex].company}
-                  </motion.h3>
-                  <motion.p 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.15 }}
-                    className="text-primary font-medium"
-                  >
-                    {careerData[selectedIndex].role}
-                  </motion.p>
-                </div>
-                <motion.div 
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="flex items-center gap-4 text-muted-foreground text-sm"
-                >
-                  <span className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4" />
-                    {careerData[selectedIndex].location}
-                  </span>
-                  <span className="hidden sm:inline">•</span>
-                  <span>{careerData[selectedIndex].period}</span>
-                </motion.div>
-              </div>
-
-              {/* Responsibilities with Sprinkle Animation */}
-              <div>
-                <motion.h4 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.25 }}
-                  className="font-semibold text-foreground mb-4 flex items-center gap-2"
-                >
-                  <Briefcase className="w-5 h-5 text-primary" />
-                  Strategic Roles & Responsibilities
-                </motion.h4>
-                <div className="grid gap-3">
-                  {careerData[selectedIndex].responsibilities.map((resp, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -30, scale: 0.8, rotate: -5 }}
-                      animate={{ opacity: 1, x: 0, scale: 1, rotate: 0 }}
-                      transition={{ 
-                        duration: 0.5, 
-                        delay: 0.3 + i * 0.15,
-                        type: "spring",
-                        stiffness: 100
-                      }}
-                      className="flex items-start gap-3 p-3 bg-background/50 rounded-lg border border-border/50"
-                    >
-                      <motion.div 
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        transition={{ 
-                          duration: 0.6, 
-                          delay: 0.4 + i * 0.15,
-                          type: "spring",
-                          stiffness: 200
-                        }}
-                        className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-gold mt-2 flex-shrink-0" 
-                      />
-                      <span className="text-muted-foreground">{resp}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

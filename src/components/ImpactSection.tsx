@@ -1,85 +1,108 @@
 import { TrendingUp, Cloud, Shield, Users, Zap, BarChart3 } from "lucide-react";
-import { ScrollReveal, StaggerContainer, StaggerItem } from "./ScrollReveal";
+import { motion } from "framer-motion";
 
-const impactCards = [{
-  icon: TrendingUp,
-  title: "Enterprise-Wide ERP Transformation",
-  description: "Directed Microsoft D365, Oracle Hospitality, and Navision rollouts across Asia and the GCC, standardizing processes and realizing over 40% cost savings.",
-  metrics: ["Multi-country deployment", "40%+ cost reduction", "Unified reporting"]
-}, {
-  icon: Cloud,
-  title: "Cloud Migration & Modernization",
-  description: "Migrated legacy infrastructure to Azure and Oracle Cloud, achieving 99.9% uptime while improving data governance, scalability, and business continuity.",
-  metrics: ["99.9% uptime", "Enhanced resilience", "Scalable architecture"]
-}, {
-  icon: Zap,
-  title: "Automation & Process Excellence",
-  description: "Implemented RPA frameworks across finance, HR, and supply chain operations, cutting manual effort by 60% and significantly increasing process accuracy.",
-  metrics: ["60% effort reduction", "P2P & AR automation", "Treasury optimization"]
-}, {
-  icon: BarChart3,
-  title: "Data Analytics & Business Intelligence",
-  description: "Developed BI platforms using Power BI and Tableau, providing real-time operational visibility and predictive insights for executive decision-making.",
-  metrics: ["Real-time dashboards", "Predictive analytics", "Executive reporting"]
-}, {
-  icon: Shield,
-  title: "Governance & Security Frameworks",
-  description: "Established IT governance and cybersecurity controls aligned with ISO 27001/27701, protecting data integrity across regulated industries.",
-  metrics: ["ISO compliance", "Risk management", "Data protection"]
-}, {
-  icon: Users,
-  title: "Digital Customer Experience",
-  description: "Led digital transformation for 350+ hospitality and retail sites, integrating eCommerce, CRM, loyalty, and mobile platforms to enhance guest satisfaction.",
-  metrics: ["350+ sites", "Omnichannel CX", "Loyalty integration"]
-}];
+const impactCards = [
+  {
+    icon: TrendingUp,
+    title: "Enterprise ERP Transformation",
+    description: "Directed Microsoft D365, Oracle Hospitality, and Navision rollouts across Asia and the GCC, standardizing processes and realizing over 40% cost savings.",
+    metrics: ["Multi-country deployment", "40%+ cost reduction", "Unified reporting"],
+  },
+  {
+    icon: Cloud,
+    title: "Cloud Migration & Modernization",
+    description: "Migrated legacy infrastructure to Azure and Oracle Cloud, achieving 99.9% uptime while improving data governance, scalability, and business continuity.",
+    metrics: ["99.9% uptime", "Enhanced resilience", "Scalable architecture"],
+  },
+  {
+    icon: Zap,
+    title: "Automation & Process Excellence",
+    description: "Implemented RPA frameworks across finance, HR, and supply chain operations, cutting manual effort by 60% and significantly increasing process accuracy.",
+    metrics: ["60% effort reduction", "P2P automation", "Treasury optimization"],
+  },
+  {
+    icon: BarChart3,
+    title: "Data Analytics & Intelligence",
+    description: "Developed BI platforms using Power BI and Tableau, providing real-time operational visibility and predictive insights for executive decision-making.",
+    metrics: ["Real-time dashboards", "Predictive analytics", "Executive reporting"],
+  },
+  {
+    icon: Shield,
+    title: "Governance & Security",
+    description: "Established IT governance and cybersecurity controls aligned with ISO 27001/27701, protecting data integrity across regulated industries.",
+    metrics: ["ISO compliance", "Risk management", "Data protection"],
+  },
+  {
+    icon: Users,
+    title: "Digital Customer Experience",
+    description: "Led digital transformation for 350+ hospitality and retail sites, integrating eCommerce, CRM, loyalty, and mobile platforms to enhance guest satisfaction.",
+    metrics: ["350+ sites", "Omnichannel CX", "Loyalty integration"],
+  },
+];
 
 export function ImpactSection() {
   return (
-    <section id="impact" className="py-12 bg-card/30">
-      <div className="container mx-auto px-6">
+    <section id="impact" className="py-24 lg:py-32 bg-background">
+      <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
-        <ScrollReveal variant="fadeUp">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
-              Transformation Impact
-            </span>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              Driving Measurable <span className="text-gradient-gold">Results</span>
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              A track record of delivering enterprise-wide transformation with quantifiable business outcomes
-            </p>
-          </div>
-        </ScrollReveal>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-2xl mb-16 lg:mb-24"
+        >
+          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">
+            Transformation Impact
+          </p>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">
+            Driving Measurable <span className="text-gradient-gold">Results</span>
+          </h2>
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            A track record of delivering enterprise-wide transformation with quantifiable business outcomes across global markets.
+          </p>
+        </motion.div>
 
-        {/* Impact Cards Grid */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
+        {/* Impact Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
           {impactCards.map((card, index) => (
-            <StaggerItem key={index}>
-              <div className="group bg-card border border-border rounded-xl p-6 hover-lift transition-all duration-300 h-full">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <card.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-                  {card.title}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                  {card.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {card.metrics.map((metric, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 text-xs rounded-full bg-secondary text-secondary-foreground"
-                    >
-                      {metric}
-                    </span>
-                  ))}
-                </div>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-background p-8 lg:p-10 group"
+            >
+              {/* Icon */}
+              <div className="w-12 h-12 flex items-center justify-center border border-border mb-6 group-hover:border-foreground transition-colors">
+                <card.icon className="w-5 h-5 text-foreground" />
               </div>
-            </StaggerItem>
+
+              {/* Title */}
+              <h3 className="font-display text-xl lg:text-2xl text-foreground mb-4">
+                {card.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                {card.description}
+              </p>
+
+              {/* Metrics */}
+              <div className="flex flex-wrap gap-2">
+                {card.metrics.map((metric, i) => (
+                  <span
+                    key={i}
+                    className="text-xs text-muted-foreground border-b border-border pb-1"
+                  >
+                    {metric}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
           ))}
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );
