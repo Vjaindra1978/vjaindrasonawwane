@@ -25,13 +25,12 @@ export function HeroSection() {
         }}
       />
 
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/10" />
-      {/* Background Image vjaindra Sonawwane */}
+      {/* Rich Dark Overlay */}
+      <div className="absolute inset-0 bg-[#1a1f2e]/75" />
 
-      {/* Light Gradient Overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/40" />
+      {/* Premium Dark Gradient Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a]/95 via-[#1a1f2e]/85 to-[#1a1f2e]/70" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#1a1f2e]/60 to-transparent" />
 
       <div className="container relative z-10 mx-auto px-6">
         <div className="max-w-5xl mx-auto text-center">
@@ -62,17 +61,17 @@ export function HeroSection() {
 
             {/* Name beside photo */}
             <div className="text-center sm:text-left">
-              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1">
                 Vjaindra Sonawwane
               </h2>
-              <p className="text-primary font-medium text-sm sm:text-base">
+              <p className="text-amber-400 font-medium text-sm sm:text-base">
                 Strategic IT & Digital Transformation Leader
               </p>
             </div>
           </div>
           {/* Main Headline */}
           <h1
-            className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-up"
+            className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-up text-white"
             style={{
               animationDelay: "0.2s",
             }}
@@ -83,7 +82,7 @@ export function HeroSection() {
           </h1>
           {/* Subheadline */}
           <p
-            className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-up font-body"
+            className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-up font-body"
             style={{
               animationDelay: "0.3s",
             }}
@@ -133,10 +132,10 @@ export function HeroSection() {
             ].map((stat, index) => (
               <div
                 key={index}
-                className="text-center p-4 bg-card/30 backdrop-blur-sm rounded-xl border border-border/30"
+                className="text-center p-4 bg-white/10 backdrop-blur-md rounded-xl border border-white/20"
               >
                 <div className="text-3xl sm:text-4xl font-display font-bold text-gradient-gold mb-2">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-sm text-gray-300">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -151,19 +150,19 @@ export function HeroSection() {
               href="https://linkedin.com/in/vjaindra-sonawwane"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full border border-border bg-card/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-300"
+              className="w-12 h-12 rounded-full border border-white/30 bg-white/10 flex items-center justify-center text-white/80 hover:text-amber-400 hover:border-amber-400 transition-all duration-300"
             >
               <Linkedin className="w-5 h-5" />
             </a>
             <a
               href="mailto:vjaindra.sonawwane@gmail.com"
-              className="w-12 h-12 rounded-full border border-border bg-card/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-300"
+              className="w-12 h-12 rounded-full border border-white/30 bg-white/10 flex items-center justify-center text-white/80 hover:text-amber-400 hover:border-amber-400 transition-all duration-300"
             >
               <Mail className="w-5 h-5" />
             </a>
             <a
               href="#connect"
-              className="w-12 h-12 rounded-full border border-border bg-card/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-300"
+              className="w-12 h-12 rounded-full border border-white/30 bg-white/10 flex items-center justify-center text-white/80 hover:text-amber-400 hover:border-amber-400 transition-all duration-300"
             >
               <Calendar className="w-5 h-5" />
             </a>
@@ -173,8 +172,8 @@ export function HeroSection() {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2">
-          <div className="w-1.5 h-3 rounded-full bg-primary animate-pulse" />
+        <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
+          <div className="w-1.5 h-3 rounded-full bg-amber-400 animate-pulse" />
         </div>
       </div>
     </section>
