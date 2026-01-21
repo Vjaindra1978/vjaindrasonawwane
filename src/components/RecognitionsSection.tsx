@@ -34,7 +34,7 @@ const recognitions = [
 
 export function RecognitionsSection() {
   return (
-    <section id="recognitions" className="py-24 lg:py-32 bg-secondary/30">
+    <section id="recognitions" className="py-16 lg:py-20 bg-secondary/30">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
@@ -42,15 +42,15 @@ export function RecognitionsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-2xl mb-16"
+          className="max-w-2xl mb-12"
         >
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">
+          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">
             Recognition & Leadership
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">
+          <h2 className="font-display text-3xl sm:text-4xl text-foreground mb-4">
             Awards & <span className="text-gradient-gold">Speaking</span>
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-muted-foreground leading-relaxed">
             Industry recognition for excellence in digital transformation and thought leadership.
           </p>
         </motion.div>

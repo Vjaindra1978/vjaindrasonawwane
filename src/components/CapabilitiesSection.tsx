@@ -142,7 +142,7 @@ export function CapabilitiesSection() {
   const activeCapability = capabilities[activeIndex];
 
   return (
-    <section id="capabilities" className="py-24 lg:py-32 bg-secondary/30">
+    <section id="capabilities" className="py-16 lg:py-20 bg-secondary/30">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
@@ -150,21 +150,21 @@ export function CapabilitiesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-2xl mb-16"
+          className="max-w-2xl mb-12"
         >
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">
+          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">
             Advisory Services
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">
+          <h2 className="font-display text-3xl sm:text-4xl text-foreground mb-4">
             Capability <span className="text-gradient-gold">Domains</span>
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-muted-foreground leading-relaxed">
             Strategic advisory across the full spectrum of digital transformation, from vision to execution.
           </p>
         </motion.div>
 
         {/* Two Column Layout */}
-        <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Left - Capability List */}
           <div className="lg:col-span-2 space-y-1">
             {capabilities.map((cap, index) => (

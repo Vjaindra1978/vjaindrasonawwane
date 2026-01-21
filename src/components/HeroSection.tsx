@@ -15,9 +15,9 @@ export function HeroSection() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-background pt-20">
+    <section className="min-h-[90vh] flex items-center justify-center bg-background pt-20">
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center py-20">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center py-12">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -30,7 +30,7 @@ export function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-6"
+              className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4"
             >
               Strategic IT & Digital Transformation
             </motion.p>
@@ -40,7 +40,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-foreground leading-[1.1] mb-8"
+              className="font-display text-4xl sm:text-5xl lg:text-6xl text-foreground leading-[1.1] mb-6"
             >
               Transforming
               <br />
@@ -54,7 +54,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-lg text-muted-foreground max-w-md mb-10 leading-relaxed"
+              className="text-base text-muted-foreground max-w-md mb-8 leading-relaxed"
             >
               20+ years directing enterprise-wide digital transformation, 
               ERP modernization, and cloud innovation across global markets.
@@ -65,7 +65,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="flex flex-wrap gap-4 mb-12"
+              className="flex flex-wrap gap-4 mb-10"
             >
               <Button variant="hero" size="lg" onClick={scrollToImpact}>
                 View Impact
@@ -80,18 +80,18 @@ export function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="flex gap-12 pt-8 border-t border-border"
+              className="flex gap-10 pt-6 border-t border-border"
             >
               <div>
-                <p className="font-display text-3xl text-foreground">20+</p>
+                <p className="font-display text-2xl text-foreground">20+</p>
                 <p className="text-xs text-muted-foreground tracking-wider uppercase mt-1">Years</p>
               </div>
               <div>
-                <p className="font-display text-3xl text-foreground">350+</p>
+                <p className="font-display text-2xl text-foreground">350+</p>
                 <p className="text-xs text-muted-foreground tracking-wider uppercase mt-1">Sites</p>
               </div>
               <div>
-                <p className="font-display text-3xl text-foreground">40%</p>
+                <p className="font-display text-2xl text-foreground">40%</p>
                 <p className="text-xs text-muted-foreground tracking-wider uppercase mt-1">Cost Savings</p>
               </div>
             </motion.div>
@@ -105,37 +105,37 @@ export function HeroSection() {
             className="order-1 lg:order-2 flex justify-center lg:justify-end"
           >
             <div className="relative">
-              {/* Main Image */}
-              <div className="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 overflow-hidden">
+              {/* Main Image - Portrait aspect ratio */}
+              <div className="w-64 sm:w-72 lg:w-80 aspect-[3/4] overflow-hidden">
                 <img
                   src={profilePhoto}
                   alt="Vjaindra Sonawwane"
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
                 />
               </div>
               
               {/* Accent Line */}
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-accent" />
+              <div className="absolute -bottom-3 -right-3 w-20 h-20 border border-accent" />
               
               {/* Social Links */}
-              <div className="absolute -left-6 top-1/2 -translate-y-1/2 flex flex-col gap-4">
+              <div className="absolute -left-5 top-1/2 -translate-y-1/2 flex flex-col gap-3">
                 <a
                   href="https://linkedin.com/in/vjaindra-sonawwane"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center border border-border bg-background hover:border-foreground transition-colors"
+                  className="w-9 h-9 flex items-center justify-center border border-border bg-background hover:border-foreground transition-colors"
                 >
                   <Linkedin className="w-4 h-4 text-foreground" />
                 </a>
                 <a
                   href="mailto:vjaindra.sonawwane@gmail.com"
-                  className="w-10 h-10 flex items-center justify-center border border-border bg-background hover:border-foreground transition-colors"
+                  className="w-9 h-9 flex items-center justify-center border border-border bg-background hover:border-foreground transition-colors"
                 >
                   <Mail className="w-4 h-4 text-foreground" />
                 </a>
                 <a
                   href="tel:+971527451378"
-                  className="w-10 h-10 flex items-center justify-center border border-border bg-background hover:border-foreground transition-colors"
+                  className="w-9 h-9 flex items-center justify-center border border-border bg-background hover:border-foreground transition-colors"
                 >
                   <Phone className="w-4 h-4 text-foreground" />
                 </a>
@@ -149,7 +149,7 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.8 }}
-          className="flex justify-center pb-8"
+          className="flex justify-center pb-4"
         >
           <button
             onClick={scrollToImpact}

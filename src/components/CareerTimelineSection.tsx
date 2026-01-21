@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Briefcase, MapPin, ChevronRight } from "lucide-react";
+import { Briefcase, MapPin, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface CareerItem {
   period: string;
@@ -103,9 +104,20 @@ const careerData: CareerItem[] = [
 
 export function CareerTimelineSection() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const scrollAmount = 320;
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
-    <section id="career" className="py-24 lg:py-32 bg-background">
+    <section id="career" className="py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
@@ -113,103 +125,128 @@ export function CareerTimelineSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-2xl mb-16"
+          className="flex items-end justify-between mb-10"
         >
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">
-            Professional Journey
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">
-            Career <span className="text-gradient-gold">Timeline</span>
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
-            20+ years of progressive leadership across global enterprises in hospitality, retail, and technology.
-          </p>
+          <div className="max-w-xl">
+            <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">
+              Professional Journey
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl text-foreground">
+              Career <span className="text-gradient-gold">Timeline</span>
+            </h2>
+          </div>
+          
+          {/* Navigation Arrows */}
+          <div className="hidden md:flex gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => scroll("left")}
+              className="w-10 h-10"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => scroll("right")}
+              className="w-10 h-10"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+          </div>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="space-y-0">
-          {careerData.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-            >
-              <button
-                onClick={() => setSelectedIndex(selectedIndex === index ? null : index)}
-                className="w-full text-left py-6 border-t border-border group"
+        {/* Horizontal Timeline */}
+        <div className="relative">
+          {/* Timeline Line */}
+          <div className="absolute top-6 left-0 right-0 h-px bg-border" />
+          
+          {/* Scrollable Cards */}
+          <div
+            ref={scrollRef}
+            className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide scroll-smooth"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {careerData.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="flex-shrink-0 w-72"
               >
-                <div className="grid grid-cols-12 gap-4 items-start">
-                  {/* Period */}
-                  <div className="col-span-12 sm:col-span-3 lg:col-span-2">
-                    <p className="text-xs text-muted-foreground tracking-wider">
-                      {item.period}
-                    </p>
-                  </div>
+                {/* Timeline Dot */}
+                <div className="relative mb-6">
+                  <div className="absolute top-0 left-6 w-3 h-3 rounded-full bg-accent border-2 border-background" />
+                </div>
 
-                  {/* Company & Role */}
-                  <div className="col-span-10 sm:col-span-8 lg:col-span-9">
-                    <h3 className="font-display text-lg lg:text-xl text-foreground group-hover:opacity-70 transition-opacity">
-                      {item.company}
-                    </h3>
-                    <p className="text-muted-foreground text-sm mt-1">
-                      {item.role}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                      <MapPin className="w-3 h-3" />
-                      {item.location}
-                    </p>
-                  </div>
-
-                  {/* Arrow */}
-                  <div className="col-span-2 sm:col-span-1 flex justify-end">
-                    <ChevronRight
-                      className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${
-                        selectedIndex === index ? "rotate-90" : ""
+                {/* Card */}
+                <button
+                  onClick={() => setSelectedIndex(selectedIndex === index ? null : index)}
+                  className="w-full text-left p-5 border border-border bg-card hover:border-foreground/20 transition-colors group"
+                >
+                  <p className="text-xs text-muted-foreground tracking-wider mb-2">
+                    {item.period}
+                  </p>
+                  <h3 className="font-display text-lg text-foreground mb-1 group-hover:opacity-80 transition-opacity">
+                    {item.company}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    {item.role}
+                  </p>
+                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                    <MapPin className="w-3 h-3" />
+                    {item.location}
+                  </p>
+                  
+                  <div className="flex items-center gap-1 mt-3 text-xs text-muted-foreground">
+                    <span>Details</span>
+                    <ChevronDown
+                      className={`w-3 h-3 transition-transform duration-300 ${
+                        selectedIndex === index ? "rotate-180" : ""
                       }`}
                     />
                   </div>
-                </div>
-              </button>
+                </button>
 
-              {/* Expanded Content */}
-              <AnimatePresence>
-                {selectedIndex === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="pb-6 pl-0 sm:pl-[25%] lg:pl-[16.67%]">
-                      <div className="border-l border-border pl-6">
-                        <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4 flex items-center gap-2">
-                          <Briefcase className="w-4 h-4" />
+                {/* Expanded Content */}
+                <AnimatePresence>
+                  {selectedIndex === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="p-4 border border-t-0 border-border bg-secondary/30">
+                        <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3 flex items-center gap-2">
+                          <Briefcase className="w-3 h-3" />
                           Key Responsibilities
                         </h4>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2">
                           {item.responsibilities.map((resp, i) => (
                             <motion.li
                               key={i}
                               initial={{ opacity: 0, x: -10 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: i * 0.1 }}
-                              className="text-muted-foreground text-sm flex items-start gap-3"
+                              className="text-muted-foreground text-xs flex items-start gap-2"
                             >
-                              <span className="w-1 h-1 rounded-full bg-accent mt-2 flex-shrink-0" />
+                              <span className="w-1 h-1 rounded-full bg-accent mt-1.5 flex-shrink-0" />
                               {resp}
                             </motion.li>
                           ))}
                         </ul>
                       </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -112,7 +112,7 @@ export function InsightsPublicationsSection() {
   };
 
   return (
-    <section id="insights" className="py-24 lg:py-32 bg-background">
+    <section id="insights" className="py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
@@ -120,21 +120,21 @@ export function InsightsPublicationsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-2xl mb-16"
+          className="max-w-2xl mb-12"
         >
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">
+          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">
             Knowledge & Perspectives
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">
+          <h2 className="font-display text-3xl sm:text-4xl text-foreground mb-4">
             Insights & <span className="text-gradient-gold">Publications</span>
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-muted-foreground leading-relaxed">
             Thoughts on leadership, technology, and digital transformation.
           </p>
         </motion.div>
 
         {/* Two Column Layout */}
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-12">
           {/* Left - Insights */}
           <div>
             <div className="flex items-center justify-between mb-6">

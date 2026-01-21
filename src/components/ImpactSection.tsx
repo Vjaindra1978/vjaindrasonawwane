@@ -42,7 +42,7 @@ const impactCards = [
 
 export function ImpactSection() {
   return (
-    <section id="impact" className="py-24 lg:py-32 bg-background">
+    <section id="impact" className="py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
@@ -50,15 +50,15 @@ export function ImpactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-2xl mb-16 lg:mb-24"
+          className="max-w-2xl mb-12"
         >
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">
+          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">
             Transformation Impact
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">
+          <h2 className="font-display text-3xl sm:text-4xl text-foreground mb-4">
             Driving Measurable <span className="text-gradient-gold">Results</span>
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-muted-foreground leading-relaxed">
             A track record of delivering enterprise-wide transformation with quantifiable business outcomes across global markets.
           </p>
         </motion.div>
@@ -72,7 +72,7 @@ export function ImpactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-background p-8 lg:p-10 group"
+              className="bg-background p-6 lg:p-8 group"
             >
               {/* Icon */}
               <div className="w-12 h-12 flex items-center justify-center border border-border mb-6 group-hover:border-foreground transition-colors">
