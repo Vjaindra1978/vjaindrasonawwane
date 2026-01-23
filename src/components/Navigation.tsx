@@ -36,7 +36,7 @@ export function Navigation() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? "bg-background border-b border-border" : "bg-transparent"
+        isScrolled ? "bg-background/95 backdrop-blur-sm border-b border-border shadow-lg" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-6 lg:px-12">
@@ -87,7 +87,7 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden py-8 border-t border-border">
+          <div className="lg:hidden py-8 border-t border-border bg-background/95 backdrop-blur-sm">
             <div className="flex flex-col gap-6">
               {navItems.map((item) => (
                 <a

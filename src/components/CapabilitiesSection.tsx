@@ -142,7 +142,7 @@ export function CapabilitiesSection() {
   const activeCapability = capabilities[activeIndex];
 
   return (
-    <section id="capabilities" className="py-16 lg:py-20 bg-secondary/30">
+    <section id="capabilities" className="py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div

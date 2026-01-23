@@ -112,7 +112,7 @@ export function InsightsPublicationsSection() {
   };
 
   return (
-    <section id="insights" className="py-16 lg:py-20 bg-background">
+    <section id="insights" className="py-16 lg:py-20 bg-secondary/50 border-y border-border">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div

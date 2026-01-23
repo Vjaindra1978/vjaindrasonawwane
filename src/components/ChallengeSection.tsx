@@ -110,7 +110,7 @@ export function ChallengeSection() {
   };
 
   return (
-    <section id="challenge" className="py-16 lg:py-20 bg-secondary/30">
+    <section id="challenge" className="py-16 lg:py-20 bg-card border-y border-border">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
