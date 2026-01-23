@@ -105,17 +105,24 @@ export function HeroSection() {
             className="order-1 lg:order-2 flex justify-center lg:justify-end"
           >
             <div className="relative">
-              {/* Main Image - Portrait aspect ratio */}
-              <div className="w-64 sm:w-72 lg:w-80 aspect-[3/4] overflow-hidden">
-                <img
-                  src={profilePhoto}
-                  alt="Vjaindra Sonawwane"
-                  className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
-                />
+              {/* Animated Border Container */}
+              <div className="relative p-1 animate-border-glow">
+                <div className="absolute inset-0 border-2 border-primary/60 animate-pulse-glow" />
+                <div className="absolute inset-0 border border-primary/30" style={{ margin: '4px' }} />
+                
+                {/* Main Image - Portrait aspect ratio */}
+                <div className="w-64 sm:w-72 lg:w-80 aspect-[3/4] overflow-hidden relative z-10">
+                  <img
+                    src={profilePhoto}
+                    alt="Vjaindra Sonawwane"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
+                  />
+                </div>
               </div>
               
-              {/* Accent Line */}
-              <div className="absolute -bottom-3 -right-3 w-20 h-20 border border-accent" />
+              {/* Corner Accent */}
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-primary/40" />
+              <div className="absolute -bottom-2 -right-2 w-16 h-16 border border-primary/20" />
               
               {/* Social Links */}
               <div className="absolute -left-5 top-1/2 -translate-y-1/2 flex flex-col gap-3">
@@ -123,21 +130,21 @@ export function HeroSection() {
                   href="https://linkedin.com/in/vjaindra-sonawwane"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 flex items-center justify-center border border-border bg-background hover:border-foreground transition-colors"
+                  className="w-9 h-9 flex items-center justify-center border border-border bg-background hover:border-primary hover:text-primary transition-colors"
                 >
-                  <Linkedin className="w-4 h-4 text-foreground" />
+                  <Linkedin className="w-4 h-4" />
                 </a>
                 <a
                   href="mailto:vjaindra.sonawwane@gmail.com"
-                  className="w-9 h-9 flex items-center justify-center border border-border bg-background hover:border-foreground transition-colors"
+                  className="w-9 h-9 flex items-center justify-center border border-border bg-background hover:border-primary hover:text-primary transition-colors"
                 >
-                  <Mail className="w-4 h-4 text-foreground" />
+                  <Mail className="w-4 h-4" />
                 </a>
                 <a
                   href="tel:+971527451378"
-                  className="w-9 h-9 flex items-center justify-center border border-border bg-background hover:border-foreground transition-colors"
+                  className="w-9 h-9 flex items-center justify-center border border-border bg-background hover:border-primary hover:text-primary transition-colors"
                 >
-                  <Phone className="w-4 h-4 text-foreground" />
+                  <Phone className="w-4 h-4" />
                 </a>
               </div>
             </div>
