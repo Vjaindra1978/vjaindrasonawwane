@@ -181,20 +181,9 @@ html.transitioning *::after {
     animation: border-shimmer 3s ease-in-out infinite;
   }
 
-  /* Minimal accent underline */
+  /* Gold text - no underline */
   .text-gradient-gold {
-    position: relative;
-    display: inline;
-  }
-  
-  .text-gradient-gold::after {
-    content: '';
-    position: absolute;
-    bottom: 0.1em;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: hsl(var(--accent));
+    color: hsl(var(--accent));
   }
 
   .bg-gradient-gold {

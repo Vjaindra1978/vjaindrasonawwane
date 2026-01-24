@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, Linkedin, Mail, Phone, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import profilePhoto from "/lovable-uploads/538e29bd-39b6-4a3c-a7ff-27aa2a81f6fb.jpg";
+import heroBg from "@/assets/hero-bg.jpeg";
 
 const RESUME_URL = "/Vjaindra_Sonawwane_Resume.pdf";
 
@@ -17,8 +18,15 @@ export function HeroSection() {
   };
 
   return (
-    <section className="min-h-[90vh] flex items-center justify-center bg-background pt-20">
-      <div className="container mx-auto px-6 lg:px-12">
+    <section className="min-h-[90vh] flex items-center justify-center pt-20 relative overflow-hidden">
+      {/* Background Image with Fade */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${heroBg})` }}
+      />
+      <div className="absolute inset-0 bg-background/85 dark:bg-background/90" />
+      
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center py-12">
           {/* Left Content */}
           <motion.div
@@ -110,13 +118,15 @@ export function HeroSection() {
             className="order-1 lg:order-2 flex justify-center lg:justify-end"
           >
             <div className="relative">
-              {/* Animated Border Container */}
-              <div className="relative p-1 animate-border-glow">
-                <div className="absolute inset-0 border-2 border-primary/60 animate-pulse-glow" />
-                <div className="absolute inset-0 border border-primary/30" style={{ margin: '4px' }} />
+              {/* Double Gold Border Container */}
+              <div className="relative p-2">
+                {/* Outer animated border */}
+                <div className="absolute inset-0 border-2 border-primary animate-pulse-glow" />
+                {/* Inner border with gap */}
+                <div className="absolute inset-[6px] border-2 border-primary/70 animate-border-glow" />
                 
                 {/* Main Image - Portrait aspect ratio */}
-                <div className="w-64 sm:w-72 lg:w-80 aspect-[3/4] overflow-hidden relative z-10">
+                <div className="w-64 sm:w-72 lg:w-80 aspect-[3/4] overflow-hidden relative z-10 m-3">
                   <img
                     src={profilePhoto}
                     alt="Vjaindra Sonawwane"
@@ -126,8 +136,8 @@ export function HeroSection() {
               </div>
               
               {/* Corner Accent */}
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-primary/40" />
-              <div className="absolute -bottom-2 -right-2 w-16 h-16 border border-primary/20" />
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-primary/50" />
+              <div className="absolute -bottom-2 -right-2 w-16 h-16 border border-primary/30" />
               
               {/* Social Links */}
               <div className="absolute -left-5 top-1/2 -translate-y-1/2 flex flex-col gap-3">

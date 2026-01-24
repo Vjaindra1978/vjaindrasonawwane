@@ -117,7 +117,7 @@ export function CareerTimelineSection() {
   };
 
   return (
-    <section id="career" className="py-16 lg:py-20 bg-secondary/50 border-y border-border">
+    <section id="career" className="py-16 lg:py-20 bg-secondary/50 border-y-2 border-primary/30">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
