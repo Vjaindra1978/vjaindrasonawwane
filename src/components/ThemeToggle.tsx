@@ -17,6 +17,17 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
+  const handleThemeChange = (newTheme: string) => {
+    // Add transitioning class for smooth animation
+    document.documentElement.classList.add('transitioning');
+    setTheme(newTheme);
+    
+    // Remove class after transition completes
+    setTimeout(() => {
+      document.documentElement.classList.remove('transitioning');
+    }, 400);
+  };
+
   if (!mounted) {
     return (
       <Button variant="ghost" size="icon" className="w-9 h-9">
@@ -50,7 +61,7 @@ export function ThemeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[120px]">
         <DropdownMenuItem
-          onClick={() => setTheme("light")}
+          onClick={() => handleThemeChange("light")}
           className="flex items-center gap-2 cursor-pointer"
         >
           <Sun className="w-4 h-4" />
@@ -58,7 +69,7 @@ export function ThemeToggle() {
           {theme === "light" && <span className="ml-auto text-accent">✓</span>}
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => setTheme("dark")}
+          onClick={() => handleThemeChange("dark")}
           className="flex items-center gap-2 cursor-pointer"
         >
           <Moon className="w-4 h-4" />
@@ -66,7 +77,7 @@ export function ThemeToggle() {
           {theme === "dark" && <span className="ml-auto text-accent">✓</span>}
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => setTheme("system")}
+          onClick={() => handleThemeChange("system")}
           className="flex items-center gap-2 cursor-pointer"
         >
           <Monitor className="w-4 h-4" />

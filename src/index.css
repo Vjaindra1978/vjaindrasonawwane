@@ -5,6 +5,19 @@
 /* Squarespace-inspired minimalist fonts */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Karla:wght@300;400;500;600;700&display=swap');
 
+/* Smooth theme transitions */
+html.transitioning,
+html.transitioning *,
+html.transitioning *::before,
+html.transitioning *::after {
+  transition: background-color 400ms ease, 
+              border-color 400ms ease, 
+              color 400ms ease,
+              fill 400ms ease,
+              stroke 400ms ease,
+              box-shadow 400ms ease !important;
+}
+
 @layer base {
   :root {
     /* Clean, minimal color palette */

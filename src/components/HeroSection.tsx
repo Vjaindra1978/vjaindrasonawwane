@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
-import { ArrowDown, Linkedin, Mail, Phone } from "lucide-react";
+import { ArrowDown, Linkedin, Mail, Phone, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import profilePhoto from "/lovable-uploads/538e29bd-39b6-4a3c-a7ff-27aa2a81f6fb.jpg";
+
+const RESUME_URL = "/Vjaindra_Sonawwane_Resume.pdf";
 
 export function HeroSection() {
   const scrollToImpact = () => {
@@ -70,8 +72,11 @@ export function HeroSection() {
               <Button variant="hero" size="lg" onClick={scrollToImpact}>
                 View Impact
               </Button>
-              <Button variant="outline" size="lg">
-                Schedule Consultation
+              <Button variant="outline" size="lg" asChild>
+                <a href={RESUME_URL} download="Vjaindra_Sonawwane_Resume.pdf">
+                  <Download className="w-4 h-4 mr-2" />
+                  Download CV
+                </a>
               </Button>
             </motion.div>
 
