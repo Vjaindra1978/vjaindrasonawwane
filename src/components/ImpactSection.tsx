@@ -42,7 +42,7 @@ const impactCards = [
 
 export function ImpactSection() {
   return (
-    <section id="impact" className="py-16 lg:py-20 bg-card border-y border-border">
+    <section id="impact" className="py-16 lg:py-20 bg-card border-y-2 border-primary/30">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
