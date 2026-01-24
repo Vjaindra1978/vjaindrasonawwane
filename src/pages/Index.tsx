@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { ImpactSection } from "@/components/ImpactSection";
 import { CareerTimelineSection } from "@/components/CareerTimelineSection";
 import { CapabilitiesSection } from "@/components/CapabilitiesSection";
+import { SkillsSection } from "@/components/SkillsSection";
 import { RecognitionsSection } from "@/components/RecognitionsSection";
 import { InsightsPublicationsSection } from "@/components/InsightsPublicationsSection";
 import { ChallengeSection } from "@/components/ChallengeSection";
@@ -18,6 +19,7 @@ const Index = () => {
       <ImpactSection />
       <CareerTimelineSection />
       <CapabilitiesSection />
+      <SkillsSection />
       <RecognitionsSection />
       <InsightsPublicationsSection />
       <ChallengeSection />

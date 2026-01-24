@@ -66,13 +66,13 @@ export function Footer() {
 
           {/* Explore Links */}
           <div>
-            <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">Explore</h4>
+            <h4 className="text-sm font-bold tracking-[0.15em] uppercase text-foreground mb-4">Explore</h4>
             <ul className="space-y-2">
               {exploreLinks.map((link) => (
                 <li key={link}>
                   <a
                     href={`#${link.toLowerCase()}`}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors editorial-link"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     {link}
                   </a>
@@ -84,29 +84,28 @@ export function Footer() {
           {/* Certifications */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <BadgeCheck className="w-4 h-4 text-muted-foreground" />
-              <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground">Certifications</h4>
+              <BadgeCheck className="w-4 h-4 text-primary" />
+              <h4 className="text-sm font-bold tracking-[0.15em] uppercase text-foreground">Certifications</h4>
             </div>
-            <ul className="space-y-1 max-h-48 overflow-y-auto pr-2">
-              {certifications.slice(0, 8).map((cert, index) => (
-                <li key={index} className="text-muted-foreground text-xs leading-relaxed">
-                  {cert}
+            <ul className="space-y-1.5 max-h-52 overflow-y-auto pr-2 scrollbar-thin">
+              {certifications.map((cert, index) => (
+                <li key={index} className="text-muted-foreground text-xs leading-relaxed hover:text-foreground transition-colors">
+                  • {cert}
                 </li>
               ))}
-              <li className="text-xs text-accent">+{certifications.length - 8} more</li>
             </ul>
           </div>
 
           {/* Academic Education */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <GraduationCap className="w-4 h-4 text-muted-foreground" />
-              <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground">Education</h4>
+              <GraduationCap className="w-4 h-4 text-primary" />
+              <h4 className="text-sm font-bold tracking-[0.15em] uppercase text-foreground">Education</h4>
             </div>
             <ul className="space-y-2">
               {academicEducations.map((edu, index) => (
-                <li key={index} className="text-muted-foreground text-xs leading-relaxed">
-                  {edu}
+                <li key={index} className="text-muted-foreground text-xs leading-relaxed hover:text-foreground transition-colors">
+                  • {edu}
                 </li>
               ))}
             </ul>
