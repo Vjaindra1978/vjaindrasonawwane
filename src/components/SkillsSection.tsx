@@ -1,61 +1,84 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { CheckCircle2 } from "lucide-react";
 
-const skills = [
-  { name: "Digital Transformation Strategy", level: 95 },
-  { name: "Enterprise Architecture (TOGAF)", level: 92 },
-  { name: "Cloud & Infrastructure (Azure/AWS)", level: 90 },
-  { name: "ERP & Business Systems", level: 88 },
-  { name: "Data Analytics & BI", level: 85 },
-  { name: "Cybersecurity & Governance", level: 87 },
-  { name: "AI & Automation (RPA)", level: 82 },
-  { name: "Stakeholder & C-Suite Engagement", level: 94 },
+const coreCompetencies = [
+  "Global Technology Strategy & Execution",
+  "Oracle Hospitality Ecosystem (PMS, POS, Integrations)",
+  "OPERA / Simphony / Enterprise POS & Guest Platforms",
+  "Cloud Transformation & Platform Modernization",
+  "Global Service Delivery & Managed Services",
+  "Software Development & Product Lifecycle Leadership",
+  "Proprietary Platform & IP Development",
+  "Enterprise Architecture & Integration Frameworks",
+  "AI, Automation & Data-Driven Innovation",
+  "Executive Stakeholder & Partner Leadership",
+  "Global Team Building & Talent Development",
 ];
 
-const technicalTools = [
-  "Microsoft Azure",
-  "AWS",
-  "Power BI",
-  "Tableau",
-  "D365 F&O",
-  "Oracle Hospitality",
-  "SAP",
-  "UiPath",
-  "Blue Prism",
-  "ServiceNow",
-  "Jira",
-  "Confluence",
+const technicalSkills = [
+  "Oracle Hospitality Platforms (PMS, POS, Integrations)",
+  "Enterprise POS & Guest Experience Systems",
+  "Cloud Platforms (Oracle Cloud, Azure, AWS)",
+  "API & Integration Frameworks",
+  "Data Analytics, BI & Customer Insights",
+  "Automation, RPA & AI-Enabled Platforms",
+  "Cybersecurity & Privacy Governance",
 ];
 
-function SkillBar({ name, level, index }: { name: string; level: number; index: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.2,
+    },
+  },
+};
 
+const itemVariants = {
+  hidden: { 
+    opacity: 0, 
+    x: -20,
+  },
+  visible: { 
+    opacity: 1, 
+    x: 0,
+  },
+};
+
+function SkillItem({ skill, index }: { skill: string; index: number }) {
   return (
-    <div ref={ref} className="mb-6">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium text-foreground">{name}</span>
-        <span className="text-xs text-primary font-semibold">{level}%</span>
-      </div>
-      <div className="h-2 bg-muted/50 overflow-hidden">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${level}%` } : { width: 0 }}
-          transition={{
-            duration: 1.2,
-            delay: index * 0.1,
-            ease: [0.25, 0.46, 0.45, 0.94],
-          }}
-          className="h-full bg-gradient-to-r from-primary to-primary/70"
-        />
-      </div>
-    </div>
+    <motion.div
+      variants={itemVariants}
+      className="flex items-start gap-3 py-2 group"
+    >
+      <motion.div
+        initial={{ scale: 0, rotate: -180 }}
+        whileInView={{ scale: 1, rotate: 0 }}
+        viewport={{ once: true }}
+        transition={{ 
+          duration: 0.4, 
+          delay: index * 0.08 + 0.3,
+          type: "spring",
+          stiffness: 200,
+        }}
+      >
+        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0 group-hover:text-accent transition-colors duration-300" />
+      </motion.div>
+      <span className="text-sm text-foreground leading-relaxed group-hover:text-primary transition-colors duration-300">
+        {skill}
+      </span>
+    </motion.div>
   );
 }
 
 export function SkillsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const coreRef = useRef(null);
+  const techRef = useRef(null);
+  const isCoreInView = useInView(coreRef, { once: true, margin: "-50px" });
+  const isTechInView = useInView(techRef, { once: true, margin: "-50px" });
 
   return (
     <section id="skills" className="py-16 lg:py-20 bg-card border-y-2 border-primary/20">
@@ -72,7 +95,7 @@ export function SkillsSection() {
             Technical Expertise
           </p>
           <h2 className="font-display text-3xl sm:text-4xl text-foreground mb-4">
-            Core <span className="text-gradient-gold">Competencies</span>
+            Professional <span className="text-gradient-gold">Competencies</span>
           </h2>
           <p className="text-muted-foreground leading-relaxed">
             Two decades of hands-on experience across enterprise technologies and strategic leadership.
@@ -80,60 +103,93 @@ export function SkillsSection() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Skill Bars */}
-          <div>
-            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-6">
-              Strategic & Technical Skills
-            </h3>
-            {skills.map((skill, index) => (
-              <SkillBar key={skill.name} {...skill} index={index} />
-            ))}
+          {/* Core Competencies */}
+          <div ref={coreRef}>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="mb-6"
+            >
+              <h3 className="text-sm font-bold text-foreground uppercase tracking-wider border-b border-primary/30 pb-3">
+                Core Competencies
+              </h3>
+            </motion.div>
+            
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate={isCoreInView ? "visible" : "hidden"}
+              className="space-y-1"
+            >
+              {coreCompetencies.map((skill, index) => (
+                <SkillItem key={skill} skill={skill} index={index} />
+              ))}
+            </motion.div>
           </div>
 
-          {/* Technology Stack */}
-          <div ref={ref}>
-            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-6">
-              Technology Stack
-            </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {technicalTools.map((tool, index) => (
-                <motion.div
-                  key={tool}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: index * 0.05,
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                  }}
-                  className="px-4 py-3 border border-border bg-background text-center hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
-                >
-                  <span className="text-sm text-foreground">{tool}</span>
-                </motion.div>
+          {/* Technical & Architect */}
+          <div ref={techRef}>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="mb-6"
+            >
+              <h3 className="text-sm font-bold text-foreground uppercase tracking-wider border-b border-primary/30 pb-3">
+                Technical & Architect
+              </h3>
+            </motion.div>
+
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate={isTechInView ? "visible" : "hidden"}
+              className="space-y-1"
+            >
+              {technicalSkills.map((skill, index) => (
+                <SkillItem key={skill} skill={skill} index={index} />
               ))}
-            </div>
+            </motion.div>
 
             {/* Competency Summary */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-8 p-6 border border-primary/30 bg-primary/5"
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="mt-10 p-6 border border-primary/30 bg-primary/5"
             >
               <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.6 }}
+                >
                   <span className="block text-2xl font-display text-primary">20+</span>
                   <span className="text-xs text-muted-foreground uppercase tracking-wider">Years Experience</span>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.7 }}
+                >
                   <span className="block text-2xl font-display text-primary">50+</span>
                   <span className="text-xs text-muted-foreground uppercase tracking-wider">Projects Delivered</span>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.8 }}
+                >
                   <span className="block text-2xl font-display text-primary">15+</span>
                   <span className="text-xs text-muted-foreground uppercase tracking-wider">Certifications</span>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
