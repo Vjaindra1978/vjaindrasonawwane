@@ -25,7 +25,7 @@ export function HeroSection() {
         style={{ 
           backgroundImage: `url(${heroBg})`,
           backgroundSize: 'contain',
-          backgroundPosition: 'center center',
+          backgroundPosition: 'center calc(50% - 96px)', // move image up ~1 inch - vj
         }}
       />
       <div className="absolute inset-0 bg-background/65 dark:bg-background/70" />
