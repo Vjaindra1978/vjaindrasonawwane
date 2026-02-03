@@ -174,8 +174,8 @@ function StatBadge({ stat, index }: { stat: typeof careerStats[0]; index: number
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="py-10 lg:py-14 bg-card">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
+    <section id="skills" className="py-10 lg:py-12 bg-card">
+      <div className="container mx-auto px-2 sm:px-3 lg:px-4">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

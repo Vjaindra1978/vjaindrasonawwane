@@ -39,7 +39,7 @@ export function Navigation() {
         isScrolled ? "bg-background/95 backdrop-blur-sm border-b border-border shadow-lg" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
+      <div className="container mx-auto px-2 sm:px-3 lg:px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <a href="#" className="flex flex-col">
@@ -48,6 +48,9 @@ export function Navigation() {
             </span>
             <span className="text-xs text-muted-foreground tracking-wider uppercase">
               Digital Transformation Advisor
+            </span>
+            <span className="text-[10px] text-primary/80 tracking-wide hidden lg:block">
+              MBA | PMP PDU | ITILv3 | Prince2 | ASM | AAI (RPA) BA | SSMBB | BPM | ISO 27001/27701 | TOGAF 10
             </span>
           </a>
 
