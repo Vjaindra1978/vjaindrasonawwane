@@ -166,8 +166,8 @@ export function InsightsRecognitionsSection() {
   };
 
   return (
-    <section id="insights" className="py-12 lg:py-16 bg-secondary/50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
+    <section id="insights" className="py-10 lg:py-12 bg-secondary/50">
+      <div className="container mx-auto px-2 sm:px-3 lg:px-4">
         {/* Two Column Layout for Both Sections */}
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
           
