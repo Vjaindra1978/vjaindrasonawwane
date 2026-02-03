@@ -25,7 +25,7 @@ export function HeroSection() {
         style={{ 
           backgroundImage: `url(${heroBg})`,
           backgroundSize: 'contain',
-          backgroundPosition: 'left calc(50% + 4in)',
+          backgroundPosition: 'left center',
         }}
       />
       <div className="absolute inset-0 bg-background/65 dark:bg-background/70" />
@@ -119,7 +119,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="order-1 lg:order-2 flex justify-center lg:justify-end"
+            className="order-1 lg:order-2 flex justify-center lg:justify-end mt-[2in]"
           >
             <div className="relative">
               {/* Double Gold Border Container */}
