@@ -7,7 +7,7 @@ export default {
   theme: {
   	container: {
   		center: true,
-		padding: '3rem',// ~48px = half inch
+		padding: '6rem',// ~48px = half inch
   		screens: {
 			'2xl': '1800px'
   		}
