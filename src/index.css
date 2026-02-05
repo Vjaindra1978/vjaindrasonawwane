@@ -139,7 +139,7 @@ html.transitioning *::after {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
     letter-spacing: 0.01em;
-   font-size: 2.0825rem;
+   font-size: 4.0000rem;
   }
 
   h1, h2, h3, h4, h5, h6 {
