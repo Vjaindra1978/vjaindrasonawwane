@@ -30,7 +30,7 @@ const exploreLinks = ["Impact", "Capabilities", "Insights", "Publications", "Con
 export function Footer() {
   return (
     <footer id="connect" className="bg-card py-10">
-      <div className="container mx-auto px-2 sm:px-3 lg:px-4">
+      <div className="container mx-auto">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-8">
           {/* Brand */}
           <div>

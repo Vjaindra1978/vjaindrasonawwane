@@ -30,7 +30,7 @@ export function HeroSection() {
       />
       <div className="absolute inset-0 bg-background/65 dark:bg-background/70" />
       
-      <div className="container mx-auto px-1 sm:px-2 lg:px-3 relative z-10">
+      <div className="container mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-10">
           {/* Left Content */}
           <motion.div

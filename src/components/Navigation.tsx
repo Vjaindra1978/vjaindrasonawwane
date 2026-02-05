@@ -39,7 +39,7 @@ export function Navigation() {
         isScrolled ? "bg-background/95 backdrop-blur-sm border-b border-border shadow-lg" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-2 sm:px-3 lg:px-4">
+      <div className="container mx-auto">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <a href="#" className="flex flex-col">
