@@ -25,13 +25,13 @@ export function HeroSection() {
         style={{ 
           backgroundImage: `url(${heroBg})`,
           backgroundSize: 'contain',
-          backgroundPosition: 'left center',
+          backgroundPosition: 'left top',
         }}
       />
       <div className="absolute inset-0 bg-background/65 dark:bg-background/70" />
       
-      <div className="container mx-auto px-2 sm:px-3 lg:px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center py-10">
+      <div className="container mx-auto px-1 sm:px-2 lg:px-3 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-10">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -54,7 +54,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="font-display text-4xl sm:text-5xl lg:text-6xl text-foreground leading-[1.1] mb-6"
+              className="font-display text-5xl sm:text-6xl lg:text-7xl text-foreground leading-[1.1] mb-6"
             >
               Transforming
               <br />
@@ -68,7 +68,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-base text-muted-foreground max-w-md mb-8 leading-relaxed"
+              className="text-lg text-muted-foreground max-w-md mb-8 leading-relaxed"
             >
               20+ years directing enterprise-wide digital transformation, 
               ERP modernization, and cloud innovation across global markets.
@@ -100,16 +100,16 @@ export function HeroSection() {
               className="flex gap-10 pt-6 border-t border-border"
             >
               <div>
-                <p className="font-display text-2xl text-foreground">20+</p>
-                <p className="text-xs text-muted-foreground tracking-wider uppercase mt-1">Years</p>
+                <p className="font-display text-3xl text-foreground">20+</p>
+                <p className="text-sm text-muted-foreground tracking-wider uppercase mt-1">Years</p>
               </div>
               <div>
-                <p className="font-display text-2xl text-foreground">350+</p>
-                <p className="text-xs text-muted-foreground tracking-wider uppercase mt-1">Sites</p>
+                <p className="font-display text-3xl text-foreground">350+</p>
+                <p className="text-sm text-muted-foreground tracking-wider uppercase mt-1">Sites</p>
               </div>
               <div>
-                <p className="font-display text-2xl text-foreground">40%</p>
-                <p className="text-xs text-muted-foreground tracking-wider uppercase mt-1">Cost Savings</p>
+                <p className="font-display text-3xl text-foreground">40%</p>
+                <p className="text-sm text-muted-foreground tracking-wider uppercase mt-1">Cost Savings</p>
               </div>
             </motion.div>
           </motion.div>
