@@ -112,39 +112,17 @@ function CompetencyCard({ item, index }: { item: typeof coreCompetencies[0]; ind
   return (
     <motion.div
       variants={itemVariants}
-      className="group relative"
+      whileHover={{ x: 4 }}
+      className="group flex items-center gap-3 py-2"
     >
-      <div className="flex flex-col items-center text-center p-6">
-        {/* Animated Ring */}
-        <motion.div 
-          className="relative mb-6"
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
-          {/* Outer Ring */}
-          <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${item.color} opacity-20 blur-md`} />
-          <div className={`relative w-24 h-24 rounded-full bg-gradient-to-br ${item.color} p-[3px]`}>
-            <div className="w-full h-full rounded-full bg-card flex items-center justify-center">
-              <motion.div
-                initial={{ rotate: 0 }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className={`absolute inset-0 rounded-full border-2 border-dashed opacity-30`}
-                style={{ borderColor: `hsl(var(--primary))` }}
-              />
-              <Icon className="w-10 h-10 text-primary" />
-            </div>
-          </div>
-        </motion.div>
-        
-        {/* Content */}
-        <h4 className="font-display text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
-          {item.title}
-        </h4>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          {item.description}
-        </p>
+      <div className={`flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br ${item.color} p-[2px]`}>
+        <div className="w-full h-full rounded-full bg-card flex items-center justify-center">
+          <Icon className="w-4 h-4 text-primary" />
+        </div>
       </div>
+      <span className="font-display text-sm text-foreground group-hover:text-primary transition-colors">
+        {item.title}
+      </span>
     </motion.div>
   );
 }
@@ -241,7 +219,7 @@ export function SkillsSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-8"
+            className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-1"
           >
             {coreCompetencies.map((item, index) => (
               <CompetencyCard key={item.title} item={item} index={index} />
