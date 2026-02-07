@@ -294,7 +294,13 @@ export function InsightsRecognitionsSection() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <h4 className="font-display text-base text-foreground">{pub.title}</h4>
+                            {pub.status === "Published" && pub.link !== "#" ? (
+                              <a href={pub.link} target="_blank" rel="noopener noreferrer" className="font-display text-base text-foreground hover:text-primary transition-colors underline underline-offset-2">
+                                {pub.title}
+                              </a>
+                            ) : (
+                              <h4 className="font-display text-base text-foreground">{pub.title}</h4>
+                            )}
                             <span className={`text-xs tracking-wider uppercase ${
                               pub.status === "Published" ? "text-accent" : "text-muted-foreground"
                             }`}>

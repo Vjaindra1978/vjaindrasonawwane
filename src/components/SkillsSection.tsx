@@ -132,24 +132,17 @@ function TechCard({ item, index }: { item: typeof technicalExpertise[0]; index: 
   return (
     <motion.div
       variants={itemVariants}
-      whileHover={{ y: -5, boxShadow: "0 10px 40px -10px hsl(var(--primary) / 0.3)" }}
-      className="group relative bg-card border-2 border-foreground/20 p-6 hover:border-foreground/40 transition-all duration-300"
+      whileHover={{ x: 4 }}
+      className="group flex items-center gap-3 py-2"
     >
-      {/* Accent Line */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
-      
-      <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-          <Icon className="w-6 h-6 text-primary" />
-        </div>
-        <div>
-          <h4 className="font-display text-base text-foreground mb-1 group-hover:text-primary transition-colors">
-            {item.title}
-          </h4>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {item.description}
-          </p>
-        </div>
+      <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+        <Icon className="w-4 h-4 text-primary" />
+      </div>
+      <div>
+        <h4 className="font-display text-sm text-foreground group-hover:text-primary transition-colors">
+          {item.title}
+        </h4>
+        <p className="text-xs text-muted-foreground leading-relaxed">{item.description}</p>
       </div>
     </motion.div>
   );
@@ -243,7 +236,7 @@ export function SkillsSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-6"
+            className="grid sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-1"
           >
             {technicalExpertise.map((item, index) => (
               <TechCard key={item.title} item={item} index={index} />
@@ -267,7 +260,7 @@ export function SkillsSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4"
           >
             {[
               { icon: ShoppingCart, title: "Retail", description: "End-to-end retail technology and operations" },
@@ -278,8 +271,8 @@ export function SkillsSection() {
               <motion.div
                 key={domain.title}
                 variants={itemVariants}
-                whileHover={{ y: -5 }}
-                className="flex flex-col items-center text-center p-5 border-2 border-foreground/20 hover:border-foreground/40 transition-all duration-300 group"
+                whileHover={{ y: -3 }}
+                className="flex flex-col items-center text-center p-3 border-2 border-foreground/20 hover:border-foreground/40 transition-all duration-300 group"
               >
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
                   <domain.icon className="w-6 h-6 text-primary" />
