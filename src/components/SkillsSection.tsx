@@ -8,7 +8,13 @@ import {
   Brain,
   Award,
   Briefcase,
-  GraduationCap
+  GraduationCap,
+  Building2,
+  Shield,
+  ShoppingCart,
+  Plane,
+  Users,
+  ConciergeBell,
 } from "lucide-react";
 
 const coreCompetencies = [
@@ -29,6 +35,30 @@ const coreCompetencies = [
     title: "Executive Stakeholder & Partner Leadership",
     description: "Building and managing relationships with key business leaders and strategic partners.",
     color: "from-pink-500 to-rose-600",
+  },
+  {
+    icon: Briefcase,
+    title: "Project / Program Management & PMO",
+    description: "End-to-end program governance, PMO setup, and delivery excellence across portfolios.",
+    color: "from-violet-500 to-purple-600",
+  },
+  {
+    icon: Award,
+    title: "Six Sigma Process Improvement & Reengineering",
+    description: "Driving operational excellence through Lean Six Sigma methodologies and process optimization.",
+    color: "from-emerald-500 to-green-600",
+  },
+  {
+    icon: Building2,
+    title: "Enterprise Architecture",
+    description: "Designing scalable enterprise architectures aligned with business strategy and technology roadmaps.",
+    color: "from-sky-500 to-indigo-600",
+  },
+  {
+    icon: Shield,
+    title: "ISO 27001 / ISO 27701 Certified",
+    description: "Certified expertise in information security and privacy management systems.",
+    color: "from-red-500 to-rose-600",
   },
 ];
 
@@ -227,7 +257,7 @@ export function SkillsSection() {
             viewport={{ once: true }}
             className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-10"
           >
-            Technical & Architect Expertise
+            Functional Technical & Architect Expertise
           </motion.h3>
           
           <motion.div
@@ -239,6 +269,46 @@ export function SkillsSection() {
           >
             {technicalExpertise.map((item, index) => (
               <TechCard key={item.title} item={item} index={index} />
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Domain Proficiency */}
+        <div className="mb-16">
+          <motion.h3
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-10"
+          >
+            Industry Domain Proficiency
+          </motion.h3>
+          
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+          >
+            {[
+              { icon: ShoppingCart, title: "Retail", description: "End-to-end retail technology and operations" },
+              { icon: Plane, title: "Travel Retail", description: "Airport & duty-free retail solutions" },
+              { icon: Users, title: "Consulting", description: "Strategic IT advisory and transformation" },
+              { icon: ConciergeBell, title: "Hospitality", description: "Hotel & hospitality platform expertise" },
+            ].map((domain, index) => (
+              <motion.div
+                key={domain.title}
+                variants={itemVariants}
+                whileHover={{ y: -5 }}
+                className="flex flex-col items-center text-center p-5 border-2 border-foreground/20 hover:border-foreground/40 transition-all duration-300 group"
+              >
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                  <domain.icon className="w-6 h-6 text-primary" />
+                </div>
+                <h4 className="font-display text-base text-foreground mb-1 group-hover:text-primary transition-colors">{domain.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{domain.description}</p>
+              </motion.div>
             ))}
           </motion.div>
         </div>

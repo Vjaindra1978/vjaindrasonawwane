@@ -28,7 +28,7 @@ export function HeroSection() {
           backgroundPosition: 'left 80px',
         }}
       />
-      <div className="absolute inset-0 bg-background/45 dark:bg-background/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/45 via-background/40 to-background/50 dark:from-background/50 dark:via-background/45 dark:to-background/55" />
       
       <div className="container mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-10">
