@@ -260,25 +260,24 @@ export function SkillsSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
+            className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-1"
           >
             {[
-              { icon: ShoppingCart, title: "Retail", description: "End-to-end retail technology and operations" },
-              { icon: Plane, title: "Travel Retail", description: "Airport & duty-free retail solutions" },
-              { icon: Users, title: "Consulting", description: "Strategic IT advisory and transformation" },
-              { icon: ConciergeBell, title: "Hospitality", description: "Hotel & hospitality platform expertise" },
+              { icon: ShoppingCart, title: "Retail" },
+              { icon: Plane, title: "Travel Retail" },
+              { icon: Users, title: "Consulting" },
+              { icon: ConciergeBell, title: "Hospitality" },
             ].map((domain, index) => (
               <motion.div
                 key={domain.title}
                 variants={itemVariants}
-                whileHover={{ y: -3 }}
-                className="flex flex-col items-center text-center p-3 border-2 border-foreground/20 hover:border-foreground/40 transition-all duration-300 group"
+                whileHover={{ x: 4 }}
+                className="group flex items-center gap-3 py-2"
               >
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                  <domain.icon className="w-6 h-6 text-primary" />
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <domain.icon className="w-4 h-4 text-primary" />
                 </div>
-                <h4 className="font-display text-base text-foreground mb-1 group-hover:text-primary transition-colors">{domain.title}</h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">{domain.description}</p>
+                <span className="font-display text-sm text-foreground group-hover:text-primary transition-colors">{domain.title}</span>
               </motion.div>
             ))}
           </motion.div>
