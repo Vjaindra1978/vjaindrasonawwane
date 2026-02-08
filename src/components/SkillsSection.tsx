@@ -156,26 +156,24 @@ function StatBadge({ stat, index }: { stat: typeof careerStats[0]; index: number
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
       whileHover={{ scale: 1.05 }}
-      className="flex flex-col items-center"
+      className="flex items-center gap-3"
     >
-      {/* Circular Badge */}
-      <div className="relative">
-        <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${stat.color} opacity-20 blur-lg`} />
-        <div className={`relative w-28 h-28 rounded-full bg-gradient-to-br ${stat.color} p-[4px]`}>
-          <div className="w-full h-full rounded-full bg-card flex flex-col items-center justify-center">
-            <span className="font-display text-2xl text-foreground">{stat.value}</span>
-            <span className="text-xs font-semibold text-primary uppercase tracking-wider">{stat.label}</span>
-          </div>
+      <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${stat.color} p-[3px] flex-shrink-0`}>
+        <div className="w-full h-full rounded-full bg-card flex flex-col items-center justify-center">
+          <span className="font-display text-lg text-foreground leading-none">{stat.value}</span>
         </div>
       </div>
-      <p className="text-xs text-muted-foreground mt-3 text-center max-w-[100px]">{stat.sublabel}</p>
+      <div>
+        <span className="text-sm font-semibold text-foreground">{stat.label}</span>
+        <p className="text-xs text-muted-foreground">{stat.sublabel}</p>
+      </div>
     </motion.div>
   );
 }
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="py-10 lg:py-12 bg-card">
+    <section id="skills" className="py-8 lg:py-10 bg-card">
       <div className="container mx-auto px-2 sm:px-3 lg:px-4">
         {/* Section Header */}
         <motion.div
@@ -183,7 +181,7 @@ export function SkillsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-12"
+          className="text-center max-w-3xl mx-auto mb-8"
         >
           <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2">
             Technical Expertise
@@ -197,12 +195,12 @@ export function SkillsSection() {
         </motion.div>
 
         {/* Core Competencies */}
-        <div className="mb-16">
+        <div className="mb-8">
           <motion.h3
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-10"
+            className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-6"
           >
             Core Competencies
           </motion.h3>
@@ -221,12 +219,12 @@ export function SkillsSection() {
         </div>
 
         {/* Technical & Architect Expertise */}
-        <div className="mb-16">
+        <div className="mb-8">
           <motion.h3
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-10"
+            className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-6"
           >
             Functional Technical & Architect Expertise
           </motion.h3>
@@ -245,12 +243,12 @@ export function SkillsSection() {
         </div>
 
         {/* Domain Proficiency */}
-        <div className="mb-16">
+        <div className="mb-8">
           <motion.h3
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-10"
+            className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-6"
           >
             Industry Domain Proficiency
           </motion.h3>
@@ -289,13 +287,13 @@ export function SkillsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="pt-10 border-t border-primary/20"
+          className="pt-6 border-t border-primary/20"
         >
-          <h3 className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-10">
+          <h3 className="text-center text-sm font-bold text-foreground uppercase tracking-wider mb-6">
             Career at a Glance
           </h3>
           
-          <div className="flex flex-wrap justify-center gap-10 md:gap-16">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
             {careerStats.map((stat, index) => (
               <StatBadge key={stat.label} stat={stat} index={index} />
             ))}
