@@ -49,7 +49,7 @@ export function Navigation() {
             <span className="text-xs text-muted-foreground tracking-wider uppercase">
               Digital Transformation Advisor
             </span>
-            <span className="text-[10px] text-primary/80 tracking-wide hidden lg:block">
+            <span className="text-[10px] font-bold text-primary/80 tracking-wide hidden lg:block">
               MBA | PMP PDU | ITILv3 | Prince2 | ASM | AAI (RPA) BA | SSMBB | BPM | ISO 27001/27701 | TOGAF 10
             </span>
           </a>
