@@ -24,8 +24,8 @@ export function HeroSection() {
         className="absolute inset-0 bg-no-repeat"
         style={{ 
           backgroundImage: `url(${heroBg})`,
-          backgroundSize: 'contain',
-          backgroundPosition: 'left 80px',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background/45 via-background/40 to-background/50 dark:from-background/50 dark:via-background/45 dark:to-background/55" />
